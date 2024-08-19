@@ -1,5 +1,5 @@
 export interface IRoom {
-    id: string
-    company: string
-    email: string   
+  id: string;
+  company: string;
+  email: string;
 }
