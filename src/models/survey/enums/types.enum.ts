@@ -1,6 +1,6 @@
 export enum QuestionTypes {
-    GRADE = 1,
-    TEXT_BOXES = 2,
-    ORDERED_TEXT_BOXES = 3,
-    TEXT = 4,
+  GRADE = 1,
+  TEXT_BOXES = 2,
+  ORDERED_TEXT_BOXES = 3,
+  TEXT = 4,
 }
