@@ -1,7 +1,6 @@
-import { registerAs } from "@nestjs/config";
+import { registerAs } from '@nestjs/config';
 
-export default registerAs("db", () => ({
-    port: process.env.DB_PORT,
+export default registerAs('db', () => ({
     host: process.env.DB_HOST,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
