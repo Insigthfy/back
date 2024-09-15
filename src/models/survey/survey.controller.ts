@@ -1,11 +1,12 @@
 import {Body, Controller, Delete, Get, Param, Post} from '@nestjs/common';
 import { SurveysService } from './surveys.service';
-import {ApiBody, ApiParam, ApiResponse} from '@nestjs/swagger';
+import { ApiBody, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Survey } from './entities/survey.entity';
 import { CreateSurveyDto } from './dto/entity.dto';
 import { SurveyParamsDto } from './dto/params.dto';
 
-@Controller('surveys')
+@ApiTags('Surveys')
+@Controller('v1/surveys')
 export class SurveysController {
   constructor(private readonly surveysService: SurveysService) {}
 
@@ -15,26 +16,46 @@ export class SurveysController {
   })
   @ApiParam({ name: 'id', type: String })
   @Get(':id')
-  async getById(@Param('id') id: string): Promise<Survey> {
+  async getById(@Param() { id }: SurveyParamsDto): Promise<Survey> {
     return await this.surveysService.getById(id);
   }
 
+  // @ApiResponse({
+  //   status: 200,
+  //   type: [Survey],
+  // })
+  // @ApiParam({ name: 'id', type: String })
+  // @Get(':id/group')
+  // async getGroup(@Param('id') id: string): Promise<Survey[]> {
+  //
+  // }
+
+  @Get(':id/responses')
+  @ApiParam({ name: 'id', type: String })
+  @ApiResponse({
+    status: 200,
+    type: [Survey],
+  })
+  async getResponses(@Param() { id }: SurveyParamsDto): Promise<Survey[]> {
+    return await this.surveysService.getResponses(id);
+  }
+
+  @Post()
+  @ApiBody({ type: CreateSurveyDto })
   @ApiResponse({
     status: 201,
     type: Survey,
   })
-  @ApiBody({ type: CreateSurveyDto })
-  @Post()
-  async create(@Body('survey') survey: CreateSurveyDto): Promise<Survey> {
+  async create(@Body() survey: CreateSurveyDto): Promise<Survey> {
     return await this.surveysService.create(survey);
   }
 
+  @Delete(':id')
+  @ApiParam({ name: 'id', type: String, required: true })
   @ApiResponse({
     status: 204,
     description: 'Survey deleted',
   })
-  @ApiParam({ name: 'id', type: String })
-  @Delete(':id')
   async delete(@Param() { id }: SurveyParamsDto): Promise<void> {
     return await this.surveysService.delete(id);
   }
