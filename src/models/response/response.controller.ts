@@ -2,7 +2,6 @@ import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { ResponsesService } from './responses.service';
 import { ApiBody, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from './entities/response.entity';
-import Api from "twilio/lib/rest/Api";
 import { ResponseParamsDto } from "./dto/params.dto";
 import { CreateResponseDto } from "./dto/entity.dto";
 
