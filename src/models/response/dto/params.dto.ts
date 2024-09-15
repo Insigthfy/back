@@ -1,6 +1,6 @@
 import { IsDefined, IsString } from "class-validator";
 
-export class SurveyParamsDto {
+export class ResponseParamsDto {
   @IsDefined()
   @IsString()
   id: string;
