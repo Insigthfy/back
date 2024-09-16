@@ -5,11 +5,15 @@ import { Survey } from './entities/survey.entity';
 import { CreateSurveyDto } from './dto/entity.dto';
 import { SurveyParamsDto } from './dto/params.dto';
 import { Response } from "../response/entities/response.entity";
+import { EmailService } from "../mailer/mailer.service";
 
 @ApiTags('Surveys')
 @Controller('v1/surveys')
 export class SurveysController {
-  constructor(private readonly surveysService: SurveysService) {}
+  constructor(
+    private readonly surveysService: SurveysService,
+    private readonly emailService: EmailService,
+  ) {}
 
   @Get(':id')
   @ApiParam({ name: 'id', type: String })
@@ -57,6 +61,13 @@ export class SurveysController {
   })
   async create(@Body() survey: CreateSurveyDto): Promise<Survey> {
     return await this.surveysService.create(survey);
+  }
+
+  @Post(':id/send')
+  @ApiParam({ name: 'id', type: String })
+  @ApiBody({ type: [String] })
+  async sendEmails(@Param() { id }: SurveyParamsDto, @Body() emails: string[]): Promise<void> {
+    await this.emailService.sendSurveyEmails(emails, id);
   }
 
   @Delete(':id')
