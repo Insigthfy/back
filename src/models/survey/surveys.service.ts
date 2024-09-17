@@ -43,9 +43,6 @@ export class SurveysService {
     newSurvey.id = v4();
     newSurvey.title = survey.title;
     newSurvey.company = survey.company;
-    newSurvey.questions = survey.questions;
-    newSurvey.createdAt = new Date();
-    newSurvey.updatedAt = new Date();
     await this.responseRepository.create(newResponse);
     return await this.surveyRepository.create(newSurvey);
   }
