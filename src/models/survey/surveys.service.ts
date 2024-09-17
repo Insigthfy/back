@@ -15,6 +15,10 @@ export class SurveysService {
     private readonly responseRepository: Model<Response>,
   ) {}
 
+  async find(): Promise<Survey[]> {
+    return await this.surveyRepository.find();
+  }
+
   async getById(id: string): Promise<Survey> {
     const survey = await this.surveyRepository.findOne({ id });
     if (!survey) {

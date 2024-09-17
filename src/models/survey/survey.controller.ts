@@ -11,6 +11,15 @@ import { Response } from "../response/entities/response.entity";
 export class SurveysController {
   constructor(private readonly surveysService: SurveysService) {}
 
+  @Get()
+  @ApiResponse({
+    status: 200,
+    type: [Survey],
+  })
+  find() {
+    return this.surveysService.find();
+  }
+
   @Get(':id')
   @ApiParam({ name: 'id', type: String })
   @ApiResponse({
