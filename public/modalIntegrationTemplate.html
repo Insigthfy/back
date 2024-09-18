@@ -88,7 +88,7 @@
       <div class="modal-content">
         <div id="page1">
           <h2 style="text-align: center; font-size: 32px">
-            Título da Pesquisa
+            {surveyTitle}
           </h2>
           <br />
           <p style="text-align: center">
@@ -176,7 +176,7 @@
         </div>
         <div id="page2" style="display: none">
           <h2 style="text-align: center; font-size: 32px">
-            Título da Pesquisa
+            {surveyTitle}
           </h2>
           <br />
           <p style="text-align: center">Por que você deu essa nota?</p>
@@ -194,7 +194,7 @@
           <h2 style="text-align: center; font-size: 32px">Obrigado!</h2>
           <br />
           <p style="text-align: center">
-            A <span id="company">nomeEmpresa</span> agradece sua disponibilidade
+            A <span id="company">{businessName}</span> agradece sua disponibilidade
           </p>
           <div class="button-container">
             <button class="gradient-button" onclick="closeModal()">
