@@ -1,10 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors } from "@nestjs/common";
 import { ApiBody, ApiParam, ApiTags } from "@nestjs/swagger";
 import { CostumersService } from "./costumers.service";
 import { CompanyParamsDto, EmailParamDto, ParamsDto } from "./dto/params.dto";
 import { CreateCostumerDto } from "./dto/create-costumer.dto";
+import { ResponseDTOInterceptor } from "src/common/interceptors/response.interceptor";
+import { ConstumerResponse } from "./dto/output.dto";
 
 @ApiTags('Costumers')
+@UseInterceptors(new ResponseDTOInterceptor(ConstumerResponse))
 @Controller('v1/costumers')
 export class CostumersController {
   constructor(private readonly costumerService: CostumersService) {}
