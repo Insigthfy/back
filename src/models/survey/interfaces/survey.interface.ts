@@ -1,4 +1,5 @@
 import { SurveyStatusEnum } from '../enums/survey-status.enum';
+import { IForm } from './form.interface';
 
 export interface ISurvey {
   id: string;
@@ -11,5 +12,5 @@ export interface ISurvey {
   status: SurveyStatusEnum;
   scheduledDate: Date;
   endDate?: Date;
-  answers: any[];
+  form: IForm[];
 }
