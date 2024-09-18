@@ -3,7 +3,7 @@ import { ResponsesService } from './responses.service';
 import { ApiBody, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from './entities/response.entity';
 import { ResponseParamsDto } from "./dto/params.dto";
-import { CreateResponseDto } from "./dto/entity.dto";
+import { CreateResponseDto } from "./dto/create.response.dto";
 
 @ApiTags('Responses')
 @Controller('v1/responses')

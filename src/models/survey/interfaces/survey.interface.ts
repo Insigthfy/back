@@ -1,10 +1,15 @@
-import { IQuestions } from './question.interface';
+import { SurveyStatusEnum } from '../enums/survey-status.enum';
 
 export interface ISurvey {
   id: string;
   title: string;
+  app: boolean;
+  email: boolean;
+  sms: boolean;
+  whatsapp: boolean;
   company: string;
-  questions: IQuestions[];
-  createdAt: Date;
-  updatedAt: Date;
+  status: SurveyStatusEnum;
+  scheduledDate: Date;
+  endDate?: Date;
+  answers: any[];
 }
