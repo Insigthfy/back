@@ -5,7 +5,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Response } from "../response/entities/response.entity";
 import { v4 } from "uuid";
-import { ResponseDto } from "../response/dto/response.dto";
+import { ResponseDtoOutput } from "../response/dto/response.dto.output";
 
 @Injectable()
 export class SurveysService {
@@ -24,7 +24,7 @@ export class SurveysService {
     return survey;
   }
 
-  async getResponses(id: string): Promise<ResponseDto> {
+  async getResponses(id: string): Promise<ResponseDtoOutput> {
     const responses = await this.responseRepository.find({ 'id': id }).select('-_id');
     const quantity = responses.length;
     if (responses.length === 0) {

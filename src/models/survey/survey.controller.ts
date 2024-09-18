@@ -6,7 +6,7 @@ import { CreateSurveyDto } from './dto/entity.dto';
 import { SurveyParamsDto } from './dto/params.dto';
 import { Response } from "../response/entities/response.entity";
 import { EmailService } from "../mailer/mailer.service";
-import { ResponseDto } from "../response/dto/response.dto";
+import { ResponseDtoOutput } from "../response/dto/response.dto.output";
 
 @ApiTags('Surveys')
 @Controller('v1/surveys')
@@ -50,7 +50,7 @@ export class SurveysController {
     status: 404,
     description: 'Survey not found',
   })
-  async getResponses(@Param() { id }: SurveyParamsDto): Promise<ResponseDto> {
+  async getResponses(@Param() { id }: SurveyParamsDto): Promise<ResponseDtoOutput> {
     return await this.surveysService.getResponses(id);
   }
 

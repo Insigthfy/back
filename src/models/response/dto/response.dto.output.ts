@@ -1,6 +1,6 @@
 import { Response } from "../entities/response.entity";
 
-export class ResponseDto {
+export class ResponseDtoOutput {
   readonly quantity: number;
   readonly responses: Response[];
 }
