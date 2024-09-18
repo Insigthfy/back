@@ -2,7 +2,7 @@ import * as Joi from '@hapi/joi';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from './configuration';
-import { MongoConfigService } from './consig.service';
+import { MongoConfigService } from './config.service';
 
 @Module({
   imports: [

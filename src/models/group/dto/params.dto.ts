@@ -1,6 +1,6 @@
 import { IsDefined, IsNotEmpty, IsString } from "class-validator";
 
-export class ResponseParamsDto {
+export class GroupParamsDto {
   @IsDefined()
   @IsString()
   @IsNotEmpty()
