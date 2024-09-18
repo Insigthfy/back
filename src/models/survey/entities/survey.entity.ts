@@ -1,10 +1,11 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { ISurvey } from '../interfaces/survey.interface';
 import { SurveyStatusEnum } from "../enums/survey-status.enum";
+import { IForm } from "../interfaces/form.interface";
 
 @Schema()
 export class Survey implements ISurvey {
-  @Prop({ name: "_id", required: true })
+  @Prop({ name: "_id", required: false })
   id: string;
   
   @Prop({ required: true })
@@ -32,7 +33,7 @@ export class Survey implements ISurvey {
   scheduledDate: Date;
 
   @Prop({ required: true })
-  answers: any[];
+  form: IForm[];
 }
 
 export const SurveySchema = SchemaFactory.createForClass(Survey);
