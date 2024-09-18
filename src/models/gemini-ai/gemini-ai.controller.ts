@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
+import { Controller, HttpStatus, Param, Post, Res } from '@nestjs/common';
 import { GeminiAIService } from './gemini-ai.service';
 import { Response } from 'express';
 
@@ -6,10 +6,10 @@ import { Response } from 'express';
 export class GeminiAIController {
   constructor(private readonly geminiAIService: GeminiAIService) {}
 
-  @Post()
+  @Post('/:idSurvey')
   async summarizeText(
     @Res() res: Response,
-    @Body('idSurvey') idSurvey: number,
+    @Param('idSurvey') idSurvey: string,
   ): Promise<Response<string>> {
     try {
       const summarizedText = await this.geminiAIService.summarizeText(idSurvey);
@@ -19,10 +19,10 @@ export class GeminiAIController {
     }
   }
 
-  @Post('/emotion')
+  @Post('/emotion/:idSurvey')
   async emotionText(
     @Res() res: Response,
-    @Body('idSurvey') idSurvey: number,
+    @Param('idSurvey') idSurvey: string,
   ): Promise<Response<string>> {
     try {
       const emotionText = await this.geminiAIService.emotionText(idSurvey);
