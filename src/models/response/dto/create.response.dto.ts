@@ -1,5 +1,5 @@
 import { UserDto } from "./user.dto";
-import { IsArray, IsDefined, IsString } from "class-validator";
+import { IsArray, IsDefined, IsNotEmpty, IsString } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateResponseDto {
@@ -15,5 +15,6 @@ export class CreateResponseDto {
   })
   @IsDefined()
   @IsArray()
+  @IsNotEmpty()
   responses: any[];
 }

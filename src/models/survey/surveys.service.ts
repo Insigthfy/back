@@ -5,6 +5,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Response } from "../response/entities/response.entity";
 import { v4 } from "uuid";
+import { ResponseDtoOutput } from "../response/dto/response.dto.output";
 
 @Injectable()
 export class SurveysService {
@@ -20,19 +21,20 @@ export class SurveysService {
   }
 
   async getById(id: string): Promise<Survey> {
-    const survey = await this.surveyRepository.findOne({ id });
+    const survey = await this.surveyRepository.findOne({ id }).select('-_id');
     if (!survey) {
       throw new NotFoundException(`Survey with id ${id} not found`);
     }
     return survey;
   }
 
-  async getResponses(id: string): Promise<Response[]> {
-    const responses = await this.responseRepository.find({ 'id': id });
+  async getResponses(id: string): Promise<ResponseDtoOutput> {
+    const responses = await this.responseRepository.find({ 'id': id }).select('-_id');
+    const quantity = responses.length;
     if (responses.length === 0) {
       throw new NotFoundException(`Responses for survey with id ${id} not found`);
     }
-    return responses
+    return { quantity, responses };
   }
 
   async create(survey: CreateSurveyDto): Promise<Survey> {
@@ -52,5 +54,6 @@ export class SurveysService {
     if (result.deletedCount === 0) {
       throw new NotFoundException(`Survey with id ${id} not found`);
     }
+    await this.responseRepository.deleteOne({ id });
   }
 }
