@@ -8,5 +8,6 @@ import { Company, CompanySchema } from './entities/company.entity';
     imports: [MongooseModule.forFeature([ { name: Company.name, schema: CompanySchema } ])],
     providers: [CompaniesService],
     controllers: [CompaniesController],
+    exports: [CompaniesService]
 })
 export class CompaniesModule {}

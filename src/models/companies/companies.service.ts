@@ -12,7 +12,7 @@ export class CompaniesService {
     ) {}
 
     async findOne(id: string) {
-        const company = this.companyRepository.findOne({ _id: id });
+        const company = this.companyRepository.findById(id);
 
         if(!company) {
             throw new NotFoundException(`Cannot find company with id ${id}`);
