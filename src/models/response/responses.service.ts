@@ -10,7 +10,25 @@ export class ResponsesService {
     private readonly responseRepository: Model<Response>,
   ) {}
 
-  async getById(id: string): Promise<Response> {
-    return this.responseRepository.findOne({ id: id });
+  async getSurveyById(id: string): Promise<Response> {
+    return this.responseRepository.findOne(
+      {
+        responses: {
+          $elemMatch: {
+            '0.id': id,
+          },
+        },
+      },
+      {
+        _id: 0,
+        id: 1,
+      },
+    );
+  }
+
+  async create(id: string, response: any): Promise<void> {
+    await this.responseRepository
+      .updateOne({ id: id }, { $push: { responses: response } })
+      .exec();
   }
 }

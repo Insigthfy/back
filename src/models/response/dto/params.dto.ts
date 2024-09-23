@@ -1,6 +1,6 @@
 import { IsDefined, IsNotEmpty, IsString } from "class-validator";
 
-export class SurveyParamsDto {
+export class ResponseParamsDto {
   @IsDefined()
   @IsString()
   @IsNotEmpty()

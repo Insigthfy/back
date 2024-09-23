@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDefined, IsString } from 'class-validator';
+import { IsDefined, IsNotEmpty, IsString } from "class-validator";
 import { IQuestions } from '../interfaces/question.interface';
 
 export class CreateSurveyDto {
@@ -17,6 +17,7 @@ export class CreateSurveyDto {
   })
   @IsDefined()
   @IsString()
+  @IsNotEmpty()
   company: string;
 
   @ApiProperty({
