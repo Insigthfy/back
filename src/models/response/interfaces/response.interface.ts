@@ -1,4 +1,8 @@
 export interface IResponse {
-  id: string;
-  responses: any[];
+  topic: string;
+  survey: string;
+  user: string;
+  email: string;
+  phone: string;
+  answer: string | number;
 }

@@ -1,21 +1,21 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Expose } from "class-transformer";
-import { CompanyResponse } from "src/models/companies/dto/output.dto";
+import { Expose, Transform } from "class-transformer";
 
 export class ConstumerResponse {
     @ApiProperty({
-        description: "Costumer id",
+        description: "Topic id",
         type: String
     })
-    @Expose()
+    @Transform(({ obj }) => obj._id.toString(), { toClassOnly: true })
+    @Expose({ name: "id" })
     id: string;
     
     @ApiProperty({
         description: "Costumer company",
-        type: CompanyResponse
+        type: String
     })
     @Expose()
-    company: CompanyResponse;
+    company: string;
     
     @ApiProperty({
         description: "Costumer email",

@@ -16,7 +16,7 @@ export class CostumersService {
   }
   
   async findOne(id: string) {
-    return await this.costumerRepository.findOne({ _id: id });
+    return await this.costumerRepository.findById(id);
   }
 
   async findByEmail(email: string) {

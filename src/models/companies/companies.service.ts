@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Company } from './entities/company.entity';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { CreateCompanyDto } from './dto/create-company.dto';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class CompaniesService {
     ) {}
 
     async findOne(id: string) {
-        const company = this.companyRepository.findById(id);
+        const company = await this.companyRepository.findById(id);
 
         if(!company) {
             throw new NotFoundException(`Cannot find company with id ${id}`);

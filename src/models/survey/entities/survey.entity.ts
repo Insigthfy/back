@@ -5,9 +5,6 @@ import { IForm } from "../interfaces/form.interface";
 
 @Schema()
 export class Survey implements ISurvey {
-  @Prop({ name: "_id", required: false })
-  id: string;
-  
   @Prop({ required: true })
   title: string;
 
@@ -29,8 +26,8 @@ export class Survey implements ISurvey {
   @Prop({ required: true })
   status: SurveyStatusEnum;
 
-  @Prop({ name: "date_scheduled", required: true })
-  scheduledDate: Date;
+  @Prop({ required: true })
+  date_scheduled: Date;
 
   @Prop({ required: true })
   form: IForm[];
