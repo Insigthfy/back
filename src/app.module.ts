@@ -10,6 +10,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { MailConfigService } from './config/external_application/email/config.service';
 import { MailConfigModule } from './config/external_application/email/config.module';
 import { GeminAIModule } from './models/gemini-ai/gemini-ai.module';
+import { CostumersModule } from './models/costumers/costumers.module';
+import { CompaniesModule } from './models/companies/companies.module';
 
 @Module({
   imports: [
@@ -36,8 +38,9 @@ import { GeminAIModule } from './models/gemini-ai/gemini-ai.module';
     SurveyModule,
     ResponseModule,
     GeminAIModule,
+    CostumersModule,
+    CompaniesModule,
   ],
   controllers: [AppController],
-  providers: [],
 })
 export class AppModule {}

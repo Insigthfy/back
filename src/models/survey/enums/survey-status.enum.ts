@@ -1,5 +1,5 @@
 export enum SurveyStatusEnum {
-    "active" = "Ativo",
-    "scheduled" = "Agendado",
-    "disabled" = "Inativo", 
+    "ACTIVE" = "active",
+    "SCHEDULED" = "scheduled",
+    "DISABLED" = "disabled", 
 }

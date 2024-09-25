@@ -1,15 +1,17 @@
-import {Body, Controller, Delete, Get, Param, Post} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UseInterceptors } from '@nestjs/common';
 import { SurveysService } from './surveys.service';
 import { ApiBody, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { Survey } from './entities/survey.entity';
 import { CreateSurveyDto } from './dto/entity.dto';
 import { SurveyParamsDto } from './dto/params.dto';
-import { Response } from "../response/entities/response.entity";
 import { EmailService } from "../mailer/mailer.service";
 import { ResponseDtoOutput } from "../response/dto/response.dto.output";
+import { ResponseDTOInterceptor } from 'src/common/interceptors/response.interceptor';
+import { Survey } from './entities/survey.entity';
+import { SurveyResponse } from './dto/output.dto';
 
 @ApiTags('Surveys')
 @Controller('v1/surveys')
+@UseInterceptors(new ResponseDTOInterceptor(SurveyResponse))
 export class SurveysController {
   constructor(
     private readonly surveysService: SurveysService,
@@ -19,7 +21,7 @@ export class SurveysController {
   @Get()
   @ApiResponse({
     status: 200,
-    type: [Survey],
+    type: [SurveyResponse],
   })
   find() {
     return this.surveysService.find();
@@ -37,30 +39,6 @@ export class SurveysController {
   })
   async getById(@Param() { id }: SurveyParamsDto): Promise<Survey> {
     return await this.surveysService.getById(id);
-  }
-
-  // @ApiResponse({
-  //   status: 200,
-  //   type: [Survey],
-  // })
-  // @ApiParam({ name: 'id', type: String })
-  // @Get(':id/group')
-  // async getGroup(@Param('id') id: string): Promise<Survey[]> {
-  //
-  // }
-
-  @Get(':id/responses')
-  @ApiParam({ name: 'id', type: String })
-  @ApiResponse({
-    status: 200,
-    type: [Survey],
-  })
-  @ApiResponse({
-    status: 404,
-    description: 'Survey not found',
-  })
-  async getResponses(@Param() { id }: SurveyParamsDto): Promise<ResponseDtoOutput> {
-    return await this.surveysService.getResponses(id);
   }
 
   @Post()

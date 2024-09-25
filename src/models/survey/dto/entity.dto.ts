@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDefined, IsNotEmpty, IsString } from "class-validator";
-import { IQuestions } from '../interfaces/question.interface';
+import { IsDateString, IsDefined, IsNotEmpty, IsString } from "class-validator";
+import { IForm } from '../interfaces/form.interface';
 
 export class CreateSurveyDto {
   @ApiProperty({
@@ -21,9 +21,16 @@ export class CreateSurveyDto {
   company: string;
 
   @ApiProperty({
-    description: 'Questions for the survey',
-    type: Object,
+    description: "Survey status",
+    type: [],
+  })
+  form: IForm[];  
+
+  @ApiProperty({
+    description: 'Date for the survey',
+    type: Date,
   })
   @IsDefined()
-  questions: IQuestions[];
+  @IsDateString()
+  scheduledDate: Date;
 }

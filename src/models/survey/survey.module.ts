@@ -3,10 +3,9 @@ import { SurveysService } from './surveys.service';
 import { SurveysController } from './survey.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Survey, SurveySchema } from './entities/survey.entity';
-import { ResponsesService } from '../response/responses.service';
-import { ResponseSchema } from '../response/entities/response.entity';
 import { EmailService } from '../mailer/mailer.service';
 import { MailerModule } from '../mailer/mailer.module';
+import { ResponseSchema } from '../response/entities/response.entity';
 
 @Module({
   imports: [
@@ -16,8 +15,8 @@ import { MailerModule } from '../mailer/mailer.module';
     ]),
     MailerModule,
   ],
-  providers: [SurveysService, ResponsesService, EmailService],
+  providers: [SurveysService, EmailService],
   controllers: [SurveysController],
-  exports: [SurveysService, ResponsesService, EmailService],
+  exports: [SurveysService, EmailService],
 })
 export class SurveyModule {}
