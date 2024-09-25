@@ -27,11 +27,20 @@ export class SurveysController {
     return this.surveysService.find();
   }
 
+  @Get('/recents')
+  @ApiResponse({
+    status: 200,
+    description: "Surveys"
+  })
+  findRecents() {
+    return this.surveysService.findRecents();
+  }
+
   @Get(':id')
   @ApiParam({ name: 'id', type: String })
   @ApiResponse({
     status: 200,
-    type: Survey,
+    type: SurveyResponse,
   })
   @ApiResponse({
     status: 404,
@@ -45,7 +54,7 @@ export class SurveysController {
   @ApiBody({ type: CreateSurveyDto })
   @ApiResponse({
     status: 201,
-    type: Survey,
+    type: SurveyResponse,
   })
   async create(@Body() survey: CreateSurveyDto): Promise<Survey> {
     return await this.surveysService.create(survey);

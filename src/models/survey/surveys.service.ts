@@ -4,15 +4,14 @@ import { CreateSurveyDto } from './dto/entity.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { SurveyStatusEnum } from './enums/survey-status.enum';
-import { ResponseDtoOutput } from '../response/dto/response.dto.output';
-import { Response } from '../response/entities/response.entity';
+import { CompaniesService } from '../companies/companies.service';
 
 @Injectable()
 export class SurveysService {
   constructor(
     @InjectModel(Survey.name)
     private readonly surveyRepository: Model<Survey>,
-    private readonly responseRepository: Model<Response>,
+    private readonly companiesService: CompaniesService,
   ) {}
 
   async find(): Promise<Survey[]> {
@@ -21,41 +20,35 @@ export class SurveysService {
 
   async getById(id: string): Promise<Survey> {
     const survey = await this.surveyRepository.findById(id);
+
     if (!survey) {
       throw new NotFoundException(`Survey with id ${id} not found`);
     }
+
     return survey;
   }
 
-  async getResponses(id: string): Promise<ResponseDtoOutput> {
-    const responses = await this.responseRepository
-      .find({ id: id })
-      .select('-_id');
-    const quantity = responses.length;
-    if (responses.length === 0) {
-      throw new NotFoundException(
-        `Responses for survey with id ${id} not found`,
-      );
-    }
-    return { quantity, responses };
+  async findRecents(): Promise<Survey[]> {
+    return this.surveyRepository.find().limit(6);
   }
-  async create({
-    company,
-    title,
-    scheduledDate,
-  }: CreateSurveyDto): Promise<Survey> {
-    // TODO: Verificar se a empresa existe
+
+  async create({ company, title, scheduledDate }: CreateSurveyDto) {
+    const c = await this.companiesService.findOne(company);
+
+    if (!c) {
+      throw new NotFoundException(`Cannot find company with id ${company}`);
+    }
 
     return await this.surveyRepository.create({
       title,
       company,
-      answers: [],
+      form: [],
       app: false,
       email: false,
       sms: false,
       whatsapp: false,
       status: SurveyStatusEnum.SCHEDULED,
-      scheduledDate,
+      date_scheduled: scheduledDate,
     });
   }
 

@@ -5,15 +5,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Survey, SurveySchema } from './entities/survey.entity';
 import { EmailService } from '../mailer/mailer.service';
 import { MailerModule } from '../mailer/mailer.module';
-import { ResponseSchema } from '../response/entities/response.entity';
+import { CompaniesModule } from '../companies/companies.module';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      { name: Survey.name, schema: SurveySchema },
-      { name: Response.name, schema: ResponseSchema },
-    ]),
+    MongooseModule.forFeature([{ name: Survey.name, schema: SurveySchema }]),
     MailerModule,
+    CompaniesModule,
   ],
   providers: [SurveysService, EmailService],
   controllers: [SurveysController],

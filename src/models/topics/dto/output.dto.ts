@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Expose, Transform } from "class-transformer";
 
-export class CompanyResponse {
+export class TopicReponse {
     @ApiProperty({
         description: "Topic id",
         type: String
@@ -11,23 +11,31 @@ export class CompanyResponse {
     id: string;
     
     @ApiProperty({
-        description: "Company name",
+        description: "Topic name",
         type: String
     })
     @Expose()
     name: string;
     
     @ApiProperty({
-        description: "Company logo",
+        description: "Topic description",
         type: String
     })
     @Expose()
-    logo: string;
+    description: string;
 
     @ApiProperty({
-        description: "Company token",
+        description: "Topic survey",
         type: String
     })
     @Expose()
-    token: string;
+    survey: string;
+
+    @ApiProperty({
+        description: "Topic creation date",
+        type: Date
+    })
+    @Transform(({ obj }) => obj.created_at, { toClassOnly: true })
+    @Expose({ name: "createdAt" })
+    created_at: Date;
 }

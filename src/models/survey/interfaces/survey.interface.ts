@@ -2,7 +2,6 @@ import { SurveyStatusEnum } from '../enums/survey-status.enum';
 import { IForm } from './form.interface';
 
 export interface ISurvey {
-  id: string;
   title: string;
   app: boolean;
   email: boolean;
@@ -10,7 +9,7 @@ export interface ISurvey {
   whatsapp: boolean;
   company: string;
   status: SurveyStatusEnum;
-  scheduledDate: Date;
+  date_scheduled: Date;
   endDate?: Date;
   form: IForm[];
 }

@@ -1,20 +1,47 @@
-import { UserDto } from "./user.dto";
-import { IsArray, IsDefined, IsNotEmpty, IsString } from "class-validator";
+import { IsDefined, IsEmail, IsMongoId, IsString } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateResponseDto {
   @ApiProperty({
-    description: 'User that submitted the survey',
-    type: UserDto,
+    description: 'Response topic',
+    type: String,
   })
-  user: UserDto;
+  @IsMongoId()
+  @IsDefined()
+  topic: string;
 
   @ApiProperty({
-    description: 'Responses to the survey questions',
-    type: Array,
+    description: 'Response survey',
+    type: String,
   })
+  @IsMongoId()
   @IsDefined()
-  @IsArray()
-  @IsNotEmpty()
-  responses: any[];
+  survey: string;
+
+  @ApiProperty({
+    description: 'Response user name',
+    type: String,
+  })
+  @IsString()
+  @IsDefined()
+  user: string;
+
+  @ApiProperty({
+    description: 'Response user email',
+    type: String
+  })
+  @IsEmail()
+  email: string;
+
+  @ApiProperty({
+    description: 'Response user phone',
+    type: String
+  })
+  phone: string;
+
+  @ApiProperty({
+    description: 'Response answer',
+    type: [Number, String, Object]
+  })
+  answer: number[] | number | string[] | string | object;  
 }

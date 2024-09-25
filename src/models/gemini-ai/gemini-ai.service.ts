@@ -16,16 +16,18 @@ export class GeminiAIService {
 
       if (!responses) throw new NotFoundException('Pesquisa não encontrada!');
 
-      const analyze: string = responses.responses
-        .map((e) => e[2].map((a: any) => a['text'] ?? ''))
-        .join(' ');
+      const textAnswer: string[] = responses
+        .filter((a) => typeof a.answer == 'string')
+        .map((e) => e.answer) as string[];
+
+      const analyze: string = textAnswer.join(' ');
 
       if (analyze.trim().length === 0) {
         throw new NotFoundException('Nenhum comentário encontrado');
       }
 
       const result = await model.generateContent(
-        'Can you sumarize it to me in pt-br, clustering it on different categories and no introduction (just the summarize)? ' +
+        'Can you sumarize it to me in pt-br, clustering it on different categories and no introduction (just the summarize)? Do not suggest any action to remove or add new comments.  text: ' +
           analyze,
       );
       const response = result.response;
@@ -45,16 +47,18 @@ export class GeminiAIService {
 
       if (!responses) throw new NotFoundException('Pesquisa não encontrada!');
 
-      const analyze: string = responses.responses
-        .map((e) => e[2].map((a: any) => a['text'] ?? ''))
-        .join(' ');
+      const textAnswer: string[] = responses
+        .filter((a) => typeof a.answer === 'string')
+        .map((e) => e.answer) as string[];
+
+      const analyze: string = textAnswer.join(' ');
 
       if (analyze.trim().length === 0) {
         throw new NotFoundException('Nenhum comentário encontrado');
       }
 
       const result = await model.generateContent(
-        "Can you cluster it on different categories/occurrences, and then classify then based on what kinda of emotion they pass (be direct, and give your summarized reason of choice) response on pt-br. Just analysis the relevant ones (the ones there are not too much negative or positive), if one of them are not relevant and significant discard it analysis. Don't forget to cluster it at max. For the answer i need the number of comments each category, the emotions of the category and the number of discarded comments and ONE (1) example of it? " +
+        "Can you cluster it on different categories/occurrences, and then classify then based on what kinda of emotion they pass (be direct, and give your summarized reason of choice) response on pt-br. Just analysis the relevant ones (the ones there are not too much negative or positive), if one of them are not relevant and significant discard it analysis. Don't forget to cluster it at max. For the answer i need the number of comments each category, the emotions of the category and the number of discarded comments and ONE (1) example of it? Do not suggest any action to remove or add new comments. text: " +
           analyze,
       );
       const response = result.response;

@@ -3,16 +3,13 @@ import { ICompany } from "../interfaces/company.interface";
 
 @Schema()
 export class Company implements ICompany {
-    @Prop({ name: "_id" })
-    id: string;
-
-    @Prop()
+    @Prop({ required: true })
     name: string;
 
-    @Prop()
+    @Prop({ required: true })
     logo: string;
 
-    @Prop()
+    @Prop({ required: true })
     token: string;
 }
 

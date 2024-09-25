@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose, Type } from 'class-transformer';
+import { Expose, Transform, Type } from 'class-transformer';
 import { SurveyStatusEnum } from '../enums/survey-status.enum';
-import { IForm } from '../interfaces/form.interface';
 
 export class FormResponse {
   @ApiProperty({
@@ -13,10 +12,10 @@ export class FormResponse {
 
   @ApiProperty({
     description: "Possible responses to the form",
-    type: [String, Number],
+    type: String || Number,
   })
   @Expose()
-  responses: string[] | number[];
+  responses: string | number;
 
   @ApiProperty({
     description: "Type of the form (1 for rating, 2 for selection, etc.)",
@@ -31,7 +30,8 @@ export class SurveyResponse {
     description: "Survey id",
     type: String
   })
-  @Expose()
+  @Transform(({ obj }) => obj._id.toString(), { toClassOnly: true })
+  @Expose({ name: "id" })
   id: string;
 
   @ApiProperty({
@@ -84,17 +84,18 @@ export class SurveyResponse {
   company: string;  
 
   @ApiProperty({
+    description: "Date of the survey",
+    type: Date,
+  })
+  @Transform(({ obj }) => obj.date_scheduled)
+  @Expose({ name: 'scheduledDate' })
+  date_scheduled: Date;  
+
+  @ApiProperty({
     description: "Survey status",
     type: [FormResponse],
   })
   @Expose()
   @Type(() => FormResponse) 
   form: FormResponse[];  
-
-  @ApiProperty({
-    description: "Date of the survey",
-    type: Date,
-  })
-  @Expose()
-  scheduledDate: Date;
 }

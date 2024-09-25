@@ -4,9 +4,6 @@ import { Types } from "mongoose";
 
 @Schema()
 export class Costumer implements ICostumer {
-    @Prop({ name: "_id" })
-    id: string;
-
     @Prop({ type: Types.ObjectId, ref: 'Company' })
     company: string;
 
