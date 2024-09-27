@@ -13,12 +13,8 @@ export class GeminiAIController {
     @Res() res: Response,
     @Param('idSurvey') idSurvey: string,
   ): Promise<Response<string>> {
-    try {
-      const summarizedText = await this.geminiAIService.summarizeText(idSurvey);
-      return res.status(HttpStatus.OK).send(summarizedText);
-    } catch (error) {
-      throw error;
-    }
+    const summarizedText = await this.geminiAIService.summarizeText(idSurvey);
+    return res.status(HttpStatus.OK).send(summarizedText);
   }
 
   @Post('/emotion/:idSurvey')
@@ -26,11 +22,7 @@ export class GeminiAIController {
     @Res() res: Response,
     @Param('idSurvey') idSurvey: string,
   ): Promise<Response<string>> {
-    try {
-      const emotionText = await this.geminiAIService.emotionText(idSurvey);
-      return res.status(HttpStatus.OK).send(emotionText);
-    } catch (error) {
-      throw error;
-    }
+    const emotionText = await this.geminiAIService.emotionText(idSurvey);
+    return res.status(HttpStatus.OK).send(emotionText);
   }
 }
