@@ -1,11 +1,17 @@
-import { Body, Controller, Get, Param, Post, UseInterceptors } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ResponsesService } from './responses.service';
-import { ApiBody, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { Response } from './entities/response.entity';
-import { ResponseParamsDto } from "./dto/params.dto";
-import { CreateResponseDto } from "./dto/create.response.dto";
-import { ResponseResponse } from "./dto/output.dto";
-import { ResponseDTOInterceptor } from "src/common/interceptors/response.interceptor";
+import { ApiBody, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ResponseParamsDto } from './dto/params.dto';
+import { CreateResponseDto } from './dto/create.response.dto';
+import { ResponseResponse } from './dto/output.dto';
+import { ResponseDTOInterceptor } from 'src/common/interceptors/response.interceptor';
 
 @ApiTags('Responses')
 @Controller('v1/responses')
@@ -17,7 +23,7 @@ export class ResponsesController {
   @ApiParam({ name: 'id', type: String })
   @ApiResponse({
     status: 200,
-    type: [ResponseResponse]
+    type: [ResponseResponse],
   })
   async getSurveyById(@Param() { id }: ResponseParamsDto) {
     return await this.responseService.getSurveyById(id);
@@ -25,11 +31,11 @@ export class ResponsesController {
 
   @Post()
   @ApiBody({
-    type: CreateResponseDto
+    type: CreateResponseDto,
   })
   @ApiResponse({
     status: 204,
-    type: CreateResponseDto
+    type: CreateResponseDto,
   })
   async create(@Body() response: CreateResponseDto) {
     return await this.responseService.create(response);

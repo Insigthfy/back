@@ -6,7 +6,7 @@ import { MongoConfigService } from './config/database/mongodb/config.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MailConfigService } from './config/external_application/email/config.service';
 import { MailConfigModule } from './config/external_application/email/config.module';
-import modules from "./models";
+import modules from './models';
 
 @Module({
   imports: [

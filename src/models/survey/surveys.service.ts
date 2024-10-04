@@ -1,10 +1,10 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Survey } from './entities/survey.entity';
 import { CreateSurveyDto } from './dto/entity.dto';
-import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
-import { SurveyStatusEnum } from "./enums/survey-status.enum";
-import { CompaniesService } from "../companies/companies.service";
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { SurveyStatusEnum } from './enums/survey-status.enum';
+import { CompaniesService } from '../companies/companies.service';
 
 @Injectable()
 export class SurveysService {
@@ -35,7 +35,7 @@ export class SurveysService {
   async create({ company, title, scheduledDate }: CreateSurveyDto) {
     const c = await this.companiesService.findOne(company);
 
-    if(!c) {
+    if (!c) {
       throw new NotFoundException(`Cannot find company with id ${company}`);
     }
 
@@ -48,7 +48,7 @@ export class SurveysService {
       sms: false,
       whatsapp: false,
       status: SurveyStatusEnum.SCHEDULED,
-      date_scheduled: scheduledDate
+      date_scheduled: scheduledDate,
     });
   }
 
