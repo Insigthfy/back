@@ -1,17 +1,35 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsMongoId, IsNotEmpty, IsString } from "class-validator";
+import { IsDefined, IsEmail, IsMongoId, IsNotEmpty, IsString } from "class-validator";
 
 export class CreateCostumerDto {
-    @IsMongoId()
-    @ApiProperty()
-    company: string;
-
+    @ApiProperty({
+        description: "Costumer email",
+        type: String
+    })
     @IsEmail()
-    @ApiProperty()
     email: string;
 
+    @ApiProperty({
+        description: "Costumer name",
+        type: String
+    })
     @IsString()
-    @IsNotEmpty()
-    @ApiProperty()
-    password: string;
+    @IsDefined()
+    name: string;
+    
+    @ApiProperty({
+        description: "Costumer surname",
+        type: String
+    })
+    @IsString()
+    @IsDefined()
+    surname: string;
+    
+    @ApiProperty({
+        description: "Costumer phone number",
+        type: String
+    })
+    @IsString()
+    @IsDefined()
+    phone: string;
 }
