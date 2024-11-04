@@ -1,11 +1,18 @@
 import { IUser } from "../interfaces/user.interface";
-import { Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 
 @Schema()
 export class User implements IUser {
+    @Prop()
     name: string;
+
+    @Prop()
     email: string;
+
+    @Prop()
     company: string;
+
+    @Prop()
     password: string;
 }
 

@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors } from "@nestjs/common";
-import { ApiBody, ApiParam, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from "@nestjs/swagger";
 import { CostumersService } from "./costumers.service";
 import { CompanyParamsDto, EmailParamDto, ParamsDto } from "./dto/params.dto";
 import { CreateCostumerDto } from "./dto/create-costumer.dto";
@@ -7,6 +7,7 @@ import { ResponseDTOInterceptor } from "src/common/interceptors/response.interce
 import { ConstumerResponse } from "./dto/output.dto";
 
 @ApiTags('Costumers')
+@ApiBearerAuth()
 @UseInterceptors(new ResponseDTOInterceptor(ConstumerResponse))
 @Controller('v1/costumers')
 export class CostumersController {

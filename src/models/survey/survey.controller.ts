@@ -1,15 +1,15 @@
 import { Body, Controller, Delete, Get, Param, Post, UseInterceptors } from '@nestjs/common';
 import { SurveysService } from './surveys.service';
-import { ApiBody, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiBody, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { CreateSurveyDto } from './dto/entity.dto';
 import { SurveyParamsDto } from './dto/params.dto';
 import { EmailService } from "../mailer/mailer.service";
-import { ResponseDtoOutput } from "../response/dto/response.dto.output";
 import { ResponseDTOInterceptor } from 'src/common/interceptors/response.interceptor';
 import { Survey } from './entities/survey.entity';
 import { SurveyResponse } from './dto/output.dto';
 
 @ApiTags('Surveys')
+@ApiBearerAuth()
 @Controller('v1/surveys')
 @UseInterceptors(new ResponseDTOInterceptor(SurveyResponse))
 export class SurveysController {

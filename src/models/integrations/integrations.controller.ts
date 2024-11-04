@@ -2,9 +2,10 @@ import { Controller, HttpStatus, Param, Post, Res } from '@nestjs/common';
 import { IntegrationsService } from './integrations.service';
 import { Response } from 'express';
 import { ParamsDto } from './dto/params.dto';
-import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 
 @ApiTags("Integrations")
+@ApiBearerAuth()
 @Controller('integrations')
 export class IntegrationsController {
   constructor(

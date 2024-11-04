@@ -7,6 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { MailConfigService } from './config/external_application/email/config.service';
 import { MailConfigModule } from './config/external_application/email/config.module';
 import modules from "./models";
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import modules from "./models";
       }),
       inject: [MailConfigService],
     }),
+    AuthenticationModule,
   ],
   controllers: [AppController],
 })
