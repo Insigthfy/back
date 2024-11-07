@@ -36,6 +36,12 @@ export class CostumersController {
     return this.costumerService.findByCompany(company);
   }
 
+  @ApiParam({ name: "id", type: String })
+  @Get('/base/:id')
+  findByBase(@Param() { id }: ParamsDto) {
+    return this.costumerService.findByBase(id);
+  }
+
   @ApiBody({
     type: CreateCostumerDto,
     required: true

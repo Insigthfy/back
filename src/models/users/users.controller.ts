@@ -9,7 +9,7 @@ import { ChangePasswordDto } from './dto/entity.dto';
 @ApiTags('Users')
 @ApiBearerAuth()
 @UseInterceptors(new ResponseDTOInterceptor(UsersResponse))
-@Controller('users')
+@Controller('/v1/users')
 export class UsersController {
     constructor(
         private readonly usersService: UsersService,

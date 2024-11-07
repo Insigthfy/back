@@ -1,8 +1,16 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Expose } from "class-transformer";
+import { Expose, Transform } from "class-transformer";
 
 export class ConstumerResponse {
-        @ApiProperty({
+    @ApiProperty({
+        description: "Costumer id",
+        type: String
+    })
+    @Transform(({ obj }) => obj._id.toString(), { toClassOnly: true })
+    @Expose({ name: "id" })
+    id: string;
+
+    @ApiProperty({
         description: "Costumer email",
         type: String
     })
@@ -29,4 +37,11 @@ export class ConstumerResponse {
     })
     @Expose()
     phone: string;
+
+    @ApiProperty({
+        description: "Costumer base",
+        type: String
+    })
+    @Expose()
+    base: string;
 }

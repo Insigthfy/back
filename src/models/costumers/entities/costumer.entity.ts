@@ -15,6 +15,9 @@ export class Costumer implements ICostumer {
     
     @Prop()
     phone: string;
+
+    @Prop()
+    base: string;
 }
 
 export const CostumerSchema = SchemaFactory.createForClass(Costumer);

@@ -1,7 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors } from '@nestjs/common';
 import { SurveysService } from './surveys.service';
 import { ApiBearerAuth, ApiBody, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { CreateSurveyDto } from './dto/entity.dto';
+import { CreateQuestionDto, CreateSurveyDto } from './dto/entity.dto';
 import { SurveyParamsDto } from './dto/params.dto';
 import { EmailService } from "../mailer/mailer.service";
 import { ResponseDTOInterceptor } from 'src/common/interceptors/response.interceptor';
@@ -60,11 +60,31 @@ export class SurveysController {
     return await this.surveysService.create(survey);
   }
 
+  @Post("question/:id")
+  @ApiBody({ type: CreateQuestionDto })
+  @ApiParam({ name: "id", type: String })
+  async createQuestion(
+    @Body() question: CreateQuestionDto,
+    @Param() { id }: SurveyParamsDto
+  ) {
+    return await this.surveysService.createQuestion(id, question);
+  }
+
   @Post(':id/send')
   @ApiParam({ name: 'id', type: String })
   @ApiBody({ type: [String] })
   async sendEmails(@Param() { id }: SurveyParamsDto, @Body() emails: string[]): Promise<void> {
     await this.emailService.sendSurveyEmails(emails, id);
+  }
+
+  @Patch(':id')
+  @ApiParam({ name: 'id', type: String })
+  @ApiBody({ type: Survey })
+  async patch(
+    @Param() { id }: SurveyParamsDto,
+    @Body() survey: Partial<Survey>
+  ) {
+    return await this.surveysService.patch(id, survey);
   }
 
   @Delete(':id')

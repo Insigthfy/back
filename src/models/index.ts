@@ -6,6 +6,7 @@ import { SurveyModule } from "./survey/survey.module";
 import { TopicsModule } from "./topics/topics.module";
 import { CostumersModule } from "./costumers/costumers.module";
 import { UsersModule } from "./users/users.module";
+import { BasesModule } from "./bases/bases.module";
 
 export default [
     CompaniesModule,
@@ -16,4 +17,5 @@ export default [
     SurveyModule,
     TopicsModule,
     UsersModule,
+    BasesModule
 ];
