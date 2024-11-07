@@ -40,3 +40,5 @@ Para rodar no modo de desenvolvimento use:
 ```bash
 npm run start:dev
 ```
+
+A aplicação roda por padrão na porta 8080, verifique se ela já está sendo usada
