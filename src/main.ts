@@ -13,11 +13,11 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalInterceptors(  
-    new ClassSerializerInterceptor(
-        app.get(Reflector),
-        { strategy: "excludeAll", excludeExtraneousValues: true }
-    )
+  app.useGlobalInterceptors(
+    new ClassSerializerInterceptor(app.get(Reflector), {
+      strategy: 'excludeAll',
+      excludeExtraneousValues: true,
+    }),
   );
 
   await app.listen(8080);

@@ -25,4 +25,14 @@ export class GeminiAIController {
     const emotionText = await this.geminiAIService.emotionText(idSurvey);
     return res.status(HttpStatus.OK).send(emotionText);
   }
+
+  @Post('/promotor/:idSurvey')
+  async classificationPromotorOrNot(
+    @Res() res: Response,
+    @Param('idSurvey') idSurvey: string,
+  ): Promise<Response<string>> {
+    const classificationPromotorOrNot =
+      await this.geminiAIService.classificationPromotorOrNot(idSurvey);
+    return res.status(HttpStatus.OK).send(classificationPromotorOrNot);
+  }
 }

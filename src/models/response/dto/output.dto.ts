@@ -47,8 +47,11 @@ export class ResponseResponse {
 
   @ApiProperty({
     description: 'Response answer',
-    type: [String, Number, Object],
+    type: [Object],
   })
   @Expose()
-  answer: string[] | string | number[] | number | object;
+  survey_answers: {
+    type: string;
+    answer: string;
+  }[];
 }

@@ -1,5 +1,5 @@
-import { IsDefined, IsEmail, IsMongoId, IsString } from "class-validator";
-import { ApiProperty } from "@nestjs/swagger";
+import { IsDefined, IsEmail, IsMongoId, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateResponseDto {
   @ApiProperty({
@@ -28,20 +28,20 @@ export class CreateResponseDto {
 
   @ApiProperty({
     description: 'Response user email',
-    type: String
+    type: String,
   })
   @IsEmail()
   email: string;
 
   @ApiProperty({
     description: 'Response user phone',
-    type: String
+    type: String,
   })
   phone: string;
 
   @ApiProperty({
     description: 'Response answer',
-    type: [Number, String, Object]
+    type: [Number, String, Object],
   })
-  answer: number[] | number | string[] | string | object;  
+  answer: number[] | number | string[] | string | object;
 }

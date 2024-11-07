@@ -19,10 +19,12 @@ export class Response implements IResponse {
   phone: string;
 
   @Prop({
-    type: String || Number,
-    required: true
+    required: true,
   })
-  answer: string | number;
+  survey_answers: {
+    type: string;
+    answer: string;
+  }[];
 }
 
 export const ResponseSchema = SchemaFactory.createForClass(Response);

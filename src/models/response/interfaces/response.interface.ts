@@ -4,5 +4,8 @@ export interface IResponse {
   user: string;
   email: string;
   phone: string;
-  answer: string | number;
+  survey_answers: {
+    type: string;
+    answer: string;
+  }[];
 }

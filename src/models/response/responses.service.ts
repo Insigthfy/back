@@ -3,8 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Response } from './entities/response.entity';
 import { Model } from 'mongoose';
 import { CreateResponseDto } from './dto/create.response.dto';
-import { ResponseResponse } from './dto/output.dto';
 import { SurveysService } from '../survey/surveys.service';
+import { ResponseResponse } from './dto/output.dto';
 
 @Injectable()
 export class ResponsesService {
@@ -15,7 +15,7 @@ export class ResponsesService {
   ) {}
 
   async getSurveyById(id: string): Promise<ResponseResponse[]> {
-    return this.responseRepository.find({ survey: id });
+    return await this.responseRepository.find({ survey: id });
   }
 
   async create(response: CreateResponseDto) {
