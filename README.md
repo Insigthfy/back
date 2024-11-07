@@ -41,4 +41,6 @@ Para rodar no modo de desenvolvimento use:
 npm run start:dev
 ```
 
+Após executar você pode acessar o [Swagger UI](http://localhost:8080/) da nossa API.
+
 A aplicação roda por padrão na porta 8080, verifique se ela já está sendo usada
