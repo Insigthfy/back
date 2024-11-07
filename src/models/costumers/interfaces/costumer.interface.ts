@@ -1,5 +1,6 @@
 export interface ICostumer {
-    company: string;
-    email: string;
-    password: string;
-}  
+  company: string;
+  email: string;
+  phone: string;
+  password: string;
+}

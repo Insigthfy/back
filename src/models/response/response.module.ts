@@ -4,6 +4,7 @@ import { ResponsesService } from './responses.service';
 import { ResponsesController } from './response.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { SurveyModule } from '../survey/survey.module';
+import { TopicsModule } from '../topics/topics.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { SurveyModule } from '../survey/survey.module';
       { name: Response.name, schema: ResponseSchema },
     ]),
     SurveyModule,
+    TopicsModule,
   ],
   providers: [ResponsesService],
   controllers: [ResponsesController],

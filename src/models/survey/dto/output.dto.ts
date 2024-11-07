@@ -4,21 +4,21 @@ import { SurveyStatusEnum } from '../enums/survey-status.enum';
 
 export class FormResponse {
   @ApiProperty({
-    description: "Form description",
-    type: String
+    description: 'Form description',
+    type: String,
   })
   @Expose()
   description: string;
 
   @ApiProperty({
-    description: "Possible responses to the form",
+    description: 'Possible responses to the form',
     type: String || Number,
   })
   @Expose()
   responses: string | number;
 
   @ApiProperty({
-    description: "Type of the form (1 for rating, 2 for selection, etc.)",
+    description: 'Type of the form (1 for rating, 2 for selection, etc.)',
     type: String,
   })
   @Expose()
@@ -27,11 +27,11 @@ export class FormResponse {
 
 export class SurveyResponse {
   @ApiProperty({
-    description: "Survey id",
-    type: String
+    description: 'Survey id',
+    type: String,
   })
   @Transform(({ obj }) => obj._id.toString(), { toClassOnly: true })
-  @Expose({ name: "id" })
+  @Expose({ name: 'id' })
   id: string;
 
   @ApiProperty({
@@ -42,60 +42,60 @@ export class SurveyResponse {
   title: string;
 
   @ApiProperty({
-    description: "Survey app trigger method",
+    description: 'Survey app trigger method',
     type: Boolean,
   })
   @Expose()
   app: boolean;
 
   @ApiProperty({
-    description: "Survey email trigger method",
+    description: 'Survey email trigger method',
     type: Boolean,
   })
   @Expose()
   email: boolean;
 
   @ApiProperty({
-    description: "Survey sms trigger method",
+    description: 'Survey sms trigger method',
     type: Boolean,
   })
   @Expose()
   sms: boolean;
 
   @ApiProperty({
-    description: "Survey whatsapp trigger method",
+    description: 'Survey whatsapp trigger method',
     type: Boolean,
   })
   @Expose()
   whatsapp: boolean;
 
   @ApiProperty({
-    description: "Survey status",
+    description: 'Survey status',
     enum: () => SurveyStatusEnum,
   })
   @Expose()
-  status: SurveyStatusEnum;  
+  status: SurveyStatusEnum;
 
   @ApiProperty({
-    description: "Survey company",
+    description: 'Survey company',
     type: String,
   })
   @Expose()
-  company: string;  
+  company: string;
 
   @ApiProperty({
-    description: "Date of the survey",
+    description: 'Date of the survey',
     type: Date,
   })
   @Transform(({ obj }) => obj.date_scheduled)
   @Expose({ name: 'scheduledDate' })
-  date_scheduled: Date;  
+  date_scheduled: Date;
 
   @ApiProperty({
-    description: "Survey status",
+    description: 'Survey status',
     type: [FormResponse],
   })
   @Expose()
-  @Type(() => FormResponse) 
-  form: FormResponse[];  
+  @Type(() => FormResponse)
+  form: FormResponse[];
 }

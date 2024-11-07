@@ -13,10 +13,10 @@ import { CostumersService } from './costumers.service';
 import { CompanyParamsDto, EmailParamDto, ParamsDto } from './dto/params.dto';
 import { CreateCostumerDto } from './dto/create-costumer.dto';
 import { ResponseDTOInterceptor } from 'src/common/interceptors/response.interceptor';
-import { ConstumerResponse } from './dto/output.dto';
+import { CostumerResponse } from './dto/output.dto';
 
 @ApiTags('Costumers')
-@UseInterceptors(new ResponseDTOInterceptor(ConstumerResponse))
+@UseInterceptors(new ResponseDTOInterceptor(CostumerResponse))
 @Controller('v1/costumers')
 export class CostumersController {
   constructor(private readonly costumerService: CostumersService) {}
@@ -28,8 +28,8 @@ export class CostumersController {
 
   @ApiParam({ name: 'id', type: String })
   @Get('/:id')
-  findOne(@Param() { id }: ParamsDto) {
-    return this.costumerService.findOne(id);
+  async findOne(@Param() { id }: ParamsDto) {
+    return await this.costumerService.findOne(id);
   }
 
   @ApiParam({ name: 'email', type: String })

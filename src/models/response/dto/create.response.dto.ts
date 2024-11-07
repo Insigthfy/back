@@ -1,4 +1,10 @@
-import { IsDefined, IsEmail, IsMongoId, IsString } from 'class-validator';
+import {
+  IsDefined,
+  IsEmail,
+  IsMongoId,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateResponseDto {
@@ -7,7 +13,8 @@ export class CreateResponseDto {
     type: String,
   })
   @IsMongoId()
-  @IsDefined()
+  // @IsDefined()
+  @IsOptional()
   topic: string;
 
   @ApiProperty({
@@ -41,7 +48,6 @@ export class CreateResponseDto {
 
   @ApiProperty({
     description: 'Response answer',
-    type: [Number, String, Object],
   })
-  answer: number[] | number | string[] | string | object;
+  survey_answers: { type: string; answer: string }[];
 }

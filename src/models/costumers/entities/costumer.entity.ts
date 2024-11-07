@@ -11,6 +11,9 @@ export class Costumer implements ICostumer {
   email: string;
 
   @Prop()
+  phone: string;
+
+  @Prop()
   password: string;
 }
 

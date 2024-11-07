@@ -7,5 +7,6 @@ import { ResponseModule } from '../response/response.module';
   controllers: [GeminiAIController],
   providers: [GeminiAIService],
   imports: [ResponseModule],
+  exports: [GeminiAIService],
 })
 export class GeminAIModule {}

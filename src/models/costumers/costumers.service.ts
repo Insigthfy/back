@@ -15,7 +15,7 @@ export class CostumersService {
     return await this.costumerRepository.find();
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<Costumer> {
     return await this.costumerRepository.findById(id);
   }
 
