@@ -26,7 +26,10 @@ export class ResponsesService {
   ) {}
 
   async getSurveyById(id: string): Promise<ResponseResponse[]> {
-    return this.responseRepository.find({ survey: id });
+    return this.responseRepository
+      .find({ survey: id })
+      .populate("user", "id name email")
+      .lean();
   }
 
   async create(response: CreateResponseDto) {
@@ -41,7 +44,7 @@ export class ResponsesService {
     return await this.responseRepository.create({
       ...response,
       topic: topic.id,
-      // nps_classification: npsClassification,
+      nps_classification: npsClassification,
       date: new Date(),
     });
   }

@@ -1,9 +1,10 @@
 import { Controller, HttpStatus, Param, Post, Res } from '@nestjs/common';
 import { GeminiAIService } from './gemini-ai.service';
 import { Response } from 'express';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('GeminiAI')
+@ApiBearerAuth()
 @Controller('v1/analyze')
 export class GeminiAIController {
   constructor(private readonly geminiAIService: GeminiAIService) {}

@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose, Transform } from 'class-transformer';
-import { answerDto } from "./answer.dto";
+import { Expose, Transform, Type } from 'class-transformer';
+import { ISurveyAnswer } from '../interfaces/response.interface';
+import { CostumerResponse } from "../../costumers/dto/output.dto";
 
 export class ResponseResponse {
   @ApiProperty({
@@ -29,6 +30,7 @@ export class ResponseResponse {
     description: 'Response username',
     type: String,
   })
+  @Type(() => CostumerResponse)
   @Expose()
   user: string;
 
@@ -50,6 +52,8 @@ export class ResponseResponse {
     description: 'Response answer',
     type: [Object],
   })
-  @Expose()
-  survey_answers: answerDto[];
+  @Type(() => ISurveyAnswer)
+  @Transform(({ obj }) => obj.survey_answers, { toClassOnly: true })
+  @Expose({ name: "surveyAnswers" })
+  survey_answers: ISurveyAnswer[];
 }

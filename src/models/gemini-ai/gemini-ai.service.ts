@@ -8,7 +8,7 @@ dotenv.config();
 
 @Injectable()
 export class GeminiAIService {
-  constructor(private readonly responseService: ResponsesService) {}
+  constructor(private readonly responseService: ResponsesService) { }
 
   async summarizeText(idSurvey: string): Promise<string> {
     try {
@@ -34,7 +34,7 @@ export class GeminiAIService {
       const emotion = await this.emotionText(idSurvey);
 
       const result = await model.generateContent(
-        `Can you sumarize it to me in pt-br, clustering it on different categories and no introduction (just the summarize)? Do not suggest any action to remove or add new comments. You should return it as a json mapped as {summary: allTheTextsJoinedSummarized, topics: [topicName: [textsOfTopic]]}, also add on this json the positive and negative topics length based on ${emotion}. return it as json. texts: ${analyze}`,
+        `Summarize the following texts in pt-br and return a JSON: {"summary": "Uma única string resumindo todos os textos.", "topics": [{"topicTitle": "Título do tópico", "topicDescription": "Descrição geral do tema, sem mencionar nomes ou detalhes específicos.", "texts": ["Lista de textos relacionados a esse tópico"]}], "positiveTopicsCount": Número de tópicos positivos (${emotion}), "negativeTopicsCount": Número de tópicos negativos (${emotion})}; evite mencionar nomes específicos ou títulos presentes nos textos originais; forneça apenas o JSON, sem introduções ou sugestões; textos: ${analyze}.`
       );
       const response = result.response;
       const textR = JSON.parse(
@@ -69,7 +69,7 @@ export class GeminiAIService {
 
       const result = await model.generateContent(
         "Can you cluster it on different categories/occurrences, and then classify then based on what kinda of emotion they pass (be direct, and give your summarized reason of choice) response on pt-br. Just analysis the relevant ones (the ones there are not too much negative or positive), if one of them are not relevant and significant discard it analysis. Don't forget to cluster it at max. For the answer i need the number of comments each category, the emotions of the category and the number of discarded comments and ONE (1) example of it? Do not suggest any action to remove or add new comments. text: " +
-          analyze,
+        analyze,
       );
       const response = result.response;
       const textR = response.text();
@@ -85,8 +85,29 @@ export class GeminiAIService {
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     const result = await model.generateContent(
-      "You must classify all the comments as 'Promotor', 'Neutro' or 'Detrator' based on the comment written, return just a list with the classification. Give me just an array with the final result. texts: " +
-        analyze,
+      `Classify each comment provided below on a scale from 0 to 10, where:
+      - '0' is **very harsh** or **very critical** with strong negative emotions.
+      - '1-3' is **mildly negative**, such as sarcasm or subtle criticism.
+      - '4-6' is **neutral**, with mild opinions and observations.
+      - '7-9' is **positive**, with approval or mild enthusiasm.
+      - '10' is **very positive**, with strong praise.
+    
+      Important rules:
+      - **Grade each comment as a whole without breaking it into parts**.
+      - **Do not interpret or mix different sentiments within a single comment**—grade based on the overall tone.
+      - Ignore any empty comments or arrays in the input.
+      
+      Provide only the grades in the following format: ['Ruim', 'Positivo', 'Positivo'].
+      The values are:
+      - '0': 'Muito negativo'.
+      - '1-3': 'Negativo'.
+      - '4-6': 'Neutro'.
+      - '7-9': 'Positivo'.
+      - '10': 'Muito positivo'.
+      
+      Comments to classify:
+      ${JSON.stringify(analyze)}
+    `
     );
     const response = result.response.text().trim();
 

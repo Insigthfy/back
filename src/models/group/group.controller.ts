@@ -1,10 +1,11 @@
-import { ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { Group } from "./entities/group.entity";
 import { GroupsService } from "./group.service";
 import { GroupParamsDto } from "./dto/params.dto";
 
 @ApiTags("Groups")
+@ApiBearerAuth()
 @Controller("v1/groups")
 export class GroupsController {
   constructor(

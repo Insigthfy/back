@@ -1,7 +1,7 @@
 import { FormTypes } from '../enums/types.enum';
 
 export interface IForm {
-  surveytype: FormTypes;
+  surveyType: FormTypes;
   description: string;
-  responses: (string | number)[];
+  responses: (string | number)[] | string;
 }
