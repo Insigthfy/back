@@ -1,12 +1,5 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  UseInterceptors,
-} from '@nestjs/common';
-import { ApiBody, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Param, Post, UseInterceptors } from '@nestjs/common';
+import { ApiBearerAuth, ApiBody, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TopicsService } from './topics.service';
 import { CreateTopicDto } from './dto/entity.dto';
 import { ResponseDTOInterceptor } from 'src/common/interceptors/response.interceptor';
@@ -14,6 +7,7 @@ import { TopicResponse } from './dto/output.dto';
 import { ParamsDto } from './dto/params.dto';
 
 @ApiTags('Topics')
+@ApiBearerAuth()
 @Controller('v1/topics')
 @UseInterceptors(new ResponseDTOInterceptor(TopicResponse))
 export class TopicsController {

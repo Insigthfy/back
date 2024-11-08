@@ -1,10 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ISurvey } from '../interfaces/survey.interface';
-import { SurveyStatusEnum } from '../enums/survey-status.enum';
-import { IForm } from '../interfaces/form.interface';
+import { SurveyStatusEnum } from "../enums/survey-status.enum";
+import { IForm } from "../interfaces/form.interface";
+import { Document } from "mongoose";
 
 @Schema()
-export class Survey implements ISurvey {
+export class Survey extends Document implements ISurvey {
   @Prop({ required: true })
   title: string;
 

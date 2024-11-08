@@ -4,17 +4,20 @@ import { Types } from 'mongoose';
 
 @Schema()
 export class Costumer implements ICostumer {
-  @Prop({ type: Types.ObjectId, ref: 'Company' })
-  company: string;
+    @Prop()
+    name: string;
+    
+    @Prop()
+    surname: string;
+    
+    @Prop()
+    email: string;
+    
+    @Prop()
+    phone: string;
 
-  @Prop()
-  email: string;
-
-  @Prop()
-  phone: string;
-
-  @Prop()
-  password: string;
+    @Prop()
+    base: string;
 }
 
 export const CostumerSchema = SchemaFactory.createForClass(Costumer);

@@ -1,8 +1,9 @@
 import {
+  forwardRef, Inject,
   Injectable,
   InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
+  NotFoundException
+} from "@nestjs/common";
 import { InjectModel } from '@nestjs/mongoose';
 import { Response } from './entities/response.entity';
 import { Model } from 'mongoose';
@@ -12,6 +13,7 @@ import { ResponseResponse } from './dto/output.dto';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { TopicsService } from '../topics/topics.service';
 import { TopicResponse } from '../topics/dto/output.dto';
+import { ResponsePromoterService } from "../responsePromoter/response-promoter.service";
 
 @Injectable()
 export class ResponsesService {
@@ -20,10 +22,14 @@ export class ResponsesService {
     private readonly responseRepository: Model<Response>,
     private readonly surveysService: SurveysService,
     private readonly topicsService: TopicsService,
+    private readonly responsePromotorService: ResponsePromoterService,
   ) {}
 
   async getSurveyById(id: string): Promise<ResponseResponse[]> {
-    return await this.responseRepository.find({ survey: id });
+    return this.responseRepository
+      .find({ survey: id })
+      .populate("user", "id name email")
+      .lean();
   }
 
   async create(response: CreateResponseDto) {
@@ -33,9 +39,13 @@ export class ResponsesService {
       response.survey_answers.map((e) => e.answer).join('  '),
     );
 
+    const npsClassification = await this.responsePromotorService.calculateNpsClassification(response.survey_answers);
+
     return await this.responseRepository.create({
       ...response,
       topic: topic.id,
+      nps_classification: npsClassification,
+      date: new Date(),
     });
   }
 
@@ -63,5 +73,71 @@ export class ResponsesService {
         'Não classificamos em nenhum tópico',
       );
     return data[0];
+  }
+
+  async getNpsDistribution() {
+    return this.responseRepository.aggregate([
+      { $unwind: '$survey_answers' },
+      { $match: { 'survey_answers.type': 'nps' } },
+      {
+        $group: {
+          _id: {
+            $cond: [
+              { $lte: ['$survey_answers.score', 6] }, 'Detrator',
+              { $cond: [
+                  { $lte: ['$survey_answers.score', 8] }, 'Neutro', 'Promotor'
+                ]}
+            ]
+          },
+          count: { $sum: 1 }
+        }
+      }
+    ]);
+  }
+
+  async getTopResponsePeriod() {
+    return this.responseRepository.aggregate([
+      { $unwind: '$survey_answers' },
+      { $match: { 'survey_answers.type': 'nps' } },
+      {
+        $group: {
+          _id: { $dateToString: { format: '%Y-%m', date: '$survey_answers.date' } },
+          totalResponses: { $sum: 1 }
+        }
+      },
+      { $sort: { totalResponses: -1 } },
+      { $limit: 1 }
+    ]);
+  }
+
+  async getNpsEvolution() {
+    return this.responseRepository.aggregate([
+      { $unwind: '$survey_answers' },
+      { $match: { 'survey_answers.type': 'nps' } },
+      {
+        $group: {
+          _id: { $dateToString: { format: '%Y-%m', date: '$survey_answers.date' } },
+          total: { $sum: 1 },
+          detratores: { $sum: { $cond: [{ $lte: ['$survey_answers.score', 6] }, 1, 0] } },
+          neutros: { $sum: { $cond: [{ $and: [{ $gte: ['$survey_answers.score', 7] }, { $lte: ['$survey_answers.score', 8] }] }, 1, 0] } },
+          promotores: { $sum: { $cond: [{ $gte: ['$survey_answers.score', 9] }, 1, 0] } }
+        }
+      },
+      {
+        $project: {
+          total: 1,
+          detratores: 1,
+          neutros: 1,
+          promotores: 1,
+          npsScore: {
+            $multiply: [
+              { $divide: [{ $subtract: ['$promotores', '$detratores'] }, '$total'] },
+              100
+            ]
+          }
+        }
+      },
+      { $sort: { '_id': 1 } }
+    ]);
   }
 }

@@ -29,6 +29,10 @@ export class CostumersService {
     return await this.costumerRepository.find({ company });
   }
 
+  async findByBase(base: string) {
+    return await this.costumerRepository.find({ base });
+  }
+
   async create(costumer: CreateCostumerDto) {
     return await this.costumerRepository.create(costumer);
   }

@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, UseInterceptors } from '@nestjs/common';
-import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { CompaniesService } from './companies.service';
 import { ParamsDto } from './dto/params.dto';
 import { CreateCompanyDto } from './dto/create-company.dto';
@@ -7,6 +7,7 @@ import { ResponseDTOInterceptor } from 'src/common/interceptors/response.interce
 import { CompanyResponse } from './dto/output.dto';
 
 @ApiTags('Companies')
+@ApiBearerAuth()
 @Controller('v1/companies')
 @UseInterceptors(new ResponseDTOInterceptor(CompanyResponse))
 export class CompaniesController {

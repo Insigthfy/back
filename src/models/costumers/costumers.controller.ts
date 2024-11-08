@@ -8,7 +8,7 @@ import {
   Post,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { CostumersService } from './costumers.service';
 import { CompanyParamsDto, EmailParamDto, ParamsDto } from './dto/params.dto';
 import { CreateCostumerDto } from './dto/create-costumer.dto';
@@ -16,6 +16,7 @@ import { ResponseDTOInterceptor } from 'src/common/interceptors/response.interce
 import { CostumerResponse } from './dto/output.dto';
 
 @ApiTags('Costumers')
+@ApiBearerAuth()
 @UseInterceptors(new ResponseDTOInterceptor(CostumerResponse))
 @Controller('v1/costumers')
 export class CostumersController {
@@ -42,6 +43,12 @@ export class CostumersController {
   @Get('/company/:company')
   findByCompany(@Param() { company }: CompanyParamsDto) {
     return this.costumerService.findByCompany(company);
+  }
+
+  @ApiParam({ name: "id", type: String })
+  @Get('/base/:id')
+  findByBase(@Param() { id }: ParamsDto) {
+    return this.costumerService.findByBase(id);
   }
 
   @ApiBody({

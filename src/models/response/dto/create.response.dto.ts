@@ -6,6 +6,7 @@ import {
   IsString,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { ISurveyAnswer } from '../interfaces/response.interface';
 
 export class CreateResponseDto {
   @ApiProperty({
@@ -49,5 +50,5 @@ export class CreateResponseDto {
   @ApiProperty({
     description: 'Response answer',
   })
-  survey_answers: { type: string; answer: string }[];
+  survey_answers: ISurveyAnswer[];
 }
