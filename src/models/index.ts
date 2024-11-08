@@ -5,15 +5,17 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { ResponseModule } from './response/response.module';
 import { SurveyModule } from './survey/survey.module';
 import { TopicsModule } from './topics/topics.module';
-import { GeminAIModule } from './gemini-ai/gemini-ai.module';
+import { GeminiAIModule } from './gemini-ai/gemini-ai.module';
+import { ResponsePromoterModule } from "./responsePromoter/response-promoter.module";
 
 export default [
   CompaniesModule,
   CostumersModule,
   IntegrationsModule,
   MailerModule,
-  ResponseModule,
   SurveyModule,
   TopicsModule,
-  GeminAIModule,
+  ResponseModule,
+  ResponsePromoterModule,
+  GeminiAIModule,
 ];

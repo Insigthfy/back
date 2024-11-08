@@ -40,4 +40,19 @@ export class ResponsesController {
   async create(@Body() response: CreateResponseDto) {
     return await this.responseService.create(response);
   }
+
+  @Get('distribution')
+  async getNpsDistribution() {
+    return this.responseService.getNpsDistribution();
+  }
+
+  @Get('top-period')
+  async getTopResponsePeriod() {
+    return this.responseService.getTopResponsePeriod();
+  }
+
+  @Get('evolution')
+  async getNpsEvolution() {
+    return this.responseService.getNpsEvolution();
+  }
 }

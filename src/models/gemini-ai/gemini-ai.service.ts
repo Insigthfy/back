@@ -1,8 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import * as dotenv from 'dotenv';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { ResponsesService } from './../response/responses.service';
+import { ResponsesService } from "../response/responses.service";
 import { FormTypes } from '../survey/enums/types.enum';
+
 dotenv.config();
 
 @Injectable()
@@ -79,30 +80,22 @@ export class GeminiAIService {
     }
   }
 
-  async classificationPromotorOrNot(idSurvey: string): Promise<string> {
+  async classificationPromotorOrNot(analyze: string): Promise<string> {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-    const responses = await this.responseService.getSurveyById(idSurvey);
-
-    if (!responses) throw new NotFoundException('Pesquisa não encontrada!');
-
-    const textAnswer: string[][] = responses.map((e) =>
-      e.survey_answers.map((e) => e.answer),
-    );
-
-    const analyze: string = textAnswer.join(' ');
-
-    if (analyze.trim().length === 0) {
-      throw new NotFoundException('Nenhum comentário encontrado');
-    }
 
     const result = await model.generateContent(
       "You must classify all the comments as 'Promotor', 'Neutro' or 'Detrator' based on the comment written, return just a list with the classification. Give me just an array with the final result. texts: " +
         analyze,
     );
-    const response = result.response;
-    const textR = response.text();
+    const response = result.response.text().trim();
 
-    return textR;
+    if (response.includes('Promotor')) {
+      return 'positivo';
+    } else if (response.includes('Detrator')) {
+      return 'negativo';
+    } else {
+      return 'neutro';
+    }
   }
 }
