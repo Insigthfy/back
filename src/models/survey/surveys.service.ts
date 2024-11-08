@@ -20,7 +20,10 @@ export class SurveysService {
   }
 
   async getById(id: string): Promise<Survey> {
-    const survey = await this.surveyRepository.findById(id);
+    const survey = await this.surveyRepository
+      .findById(id)
+      .populate('base', 'id name')
+      .lean();
 
     if (!survey) {
       throw new NotFoundException(`Survey with id ${id} not found`);
@@ -48,6 +51,7 @@ export class SurveysService {
       email: false,
       sms: false,
       whatsapp: false,
+      base: null,
       status: SurveyStatusEnum.SCHEDULED,
       date_scheduled: scheduledDate,
     });
@@ -68,14 +72,17 @@ export class SurveysService {
   }
 
   async patch(id: string, obj: Partial<Survey>) {
-    const survey = await this.getById(id);
+    const updatedSurvey = await this.surveyRepository.findByIdAndUpdate(id, obj, {
+      new: true,
+      runValidators: true,
+    });
+  
+    if (!updatedSurvey) {
+      throw new Error('Survey not found');
+    }
 
-    const newObject = Object.assign(survey, obj);
-
-    await newObject.save();
-
-    return newObject;
-  }
+    return updatedSurvey;
+  }  
 
   async delete(id: string): Promise<void> {
     const result = await this.surveyRepository.deleteOne({ _id: id });

@@ -2,7 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ISurvey } from '../interfaces/survey.interface';
 import { SurveyStatusEnum } from "../enums/survey-status.enum";
 import { IForm } from "../interfaces/form.interface";
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
+import { IBase } from 'src/models/bases/interfaces/base.interface';
 
 @Schema()
 export class Survey extends Document implements ISurvey {
@@ -23,6 +24,9 @@ export class Survey extends Document implements ISurvey {
 
   @Prop({ required: true })
   company: string;
+
+  @Prop({ required: true, type: Types.ObjectId, ref: "Base" })
+  base: IBase;
 
   @Prop({ required: true })
   status: SurveyStatusEnum;

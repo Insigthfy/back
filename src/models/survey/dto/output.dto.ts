@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Transform, Type } from 'class-transformer';
 import { SurveyStatusEnum } from '../enums/survey-status.enum';
+import { BaseResponse } from 'src/models/bases/dto/output.dto';
 
 export class FormResponse {
   @ApiProperty({
@@ -82,6 +83,14 @@ export class SurveyResponse {
   })
   @Expose()
   company: string;
+
+  @ApiProperty({
+    description: 'Survey base',
+    type: Object
+  })
+  @Type(() => BaseResponse)
+  @Expose()
+  base: BaseResponse
 
   @ApiProperty({
     description: 'Date of the survey',

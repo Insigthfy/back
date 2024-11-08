@@ -80,9 +80,17 @@ export class GeminiAIService {
     }
   }
 
-  async classificationPromotorOrNot(analyze: string): Promise<string> {
+  async classificationPromotorOrNot(idSurvey: string): Promise<string> {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+
+    const responses = await this.responseService.getSurveyById(idSurvey);
+
+    if (!responses) throw new NotFoundException('Pesquisa não encontrada!');
+
+    const textAnswer: string[][] = responses.map((e) =>
+      e.survey_answers.map((e) => e.answer),
+    );
 
     const result = await model.generateContent(
       `Classify each comment provided below on a scale from 0 to 10, where:
@@ -99,24 +107,21 @@ export class GeminiAIService {
       
       Provide only the grades in the following format: ['Ruim', 'Positivo', 'Positivo'].
       The values are:
-      - '0': 'Muito negativo'.
+      - '0': 'Bem Negativo'.
       - '1-3': 'Negativo'.
       - '4-6': 'Neutro'.
       - '7-9': 'Positivo'.
-      - '10': 'Muito positivo'.
+      - '10': 'Bem Positivo'.
+      - If the comment is a number, just transform it to these values
+
+      The return should be an array, for each response, in this format: { response: 'the response', grade: 'Muito positivo or somthing like this' }
       
       Comments to classify:
-      ${JSON.stringify(analyze)}
+      ${JSON.stringify(textAnswer)}
     `
     );
-    const response = result.response.text().trim();
+    const response = result.response.text().replace('```json', '').replace('```', '');
 
-    if (response.includes('Promotor')) {
-      return 'positivo';
-    } else if (response.includes('Detrator')) {
-      return 'negativo';
-    } else {
-      return 'neutro';
-    }
+    return response;
   }
 }
