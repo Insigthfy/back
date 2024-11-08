@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from "@nestjs/mongoose";
-import { Model, Types } from "mongoose";
+import { InjectModel } from '@nestjs/mongoose';
+import { Model, Types } from 'mongoose';
 import { Costumer } from './entities/costumer.entity';
 import { CreateCostumerDto } from './dto/create-costumer.dto';
 
@@ -14,8 +14,8 @@ export class CostumersService {
   async find() {
     return await this.costumerRepository.find();
   }
-  
-  async findOne(id: string) {
+
+  async findOne(id: string): Promise<Costumer> {
     return await this.costumerRepository.findById(id);
   }
 
@@ -39,20 +39,25 @@ export class CostumersService {
 
   async update(id: string, payload: Partial<CreateCostumerDto>) {
     const costumer = await this.findOne(id);
-  
+
     if (!costumer) {
       throw new Error(`Costumer with id ${id} not found`);
     }
-  
+
     const updatedCostumer = Object.assign(costumer, payload);
-  
-    await this.costumerRepository.findOneAndUpdate({ _id: id }, updatedCostumer);
+
+    await this.costumerRepository.findOneAndUpdate(
+      { _id: id },
+      updatedCostumer,
+    );
 
     return updatedCostumer;
-  }  
+  }
 
   async deleteOne(id: string): Promise<void> {
-    const costumerDeleted = await this.costumerRepository.deleteOne({ _id: id });
+    const costumerDeleted = await this.costumerRepository.deleteOne({
+      _id: id,
+    });
 
     if (!costumerDeleted.deletedCount) {
       throw new NotFoundException(`Cannot find a customer with id ${id}`);

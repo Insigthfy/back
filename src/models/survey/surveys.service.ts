@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Survey } from './entities/survey.entity';
 import { CreateQuestionDto, CreateSurveyDto } from './dto/entity.dto';
 import { InjectModel } from "@nestjs/mongoose";
@@ -49,7 +49,7 @@ export class SurveysService {
       sms: false,
       whatsapp: false,
       status: SurveyStatusEnum.SCHEDULED,
-      date_scheduled: scheduledDate
+      date_scheduled: scheduledDate,
     });
   }
 

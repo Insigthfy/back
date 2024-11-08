@@ -8,7 +8,6 @@ import { MailConfigService } from './config/external_application/email/config.se
 import { MailConfigModule } from './config/external_application/email/config.module';
 import modules from "./models";
 import { AuthenticationModule } from './authentication/authentication.module';
-import { BasesModule } from './models/bases/bases.module';
 
 @Module({
   imports: [

@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ISurvey } from '../interfaces/survey.interface';
 import { SurveyStatusEnum } from "../enums/survey-status.enum";
 import { IForm } from "../interfaces/form.interface";

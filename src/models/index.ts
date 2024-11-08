@@ -7,6 +7,7 @@ import { TopicsModule } from "./topics/topics.module";
 import { CostumersModule } from "./costumers/costumers.module";
 import { UsersModule } from "./users/users.module";
 import { BasesModule } from "./bases/bases.module";
+import { GeminAIModule } from './gemini-ai/gemini-ai.module';
 
 export default [
     CompaniesModule,
@@ -16,6 +17,7 @@ export default [
     ResponseModule,
     SurveyModule,
     TopicsModule,
+    GeminAIModule,
     UsersModule,
     BasesModule
 ];

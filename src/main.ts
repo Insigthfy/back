@@ -5,7 +5,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import getGuards from './common/guards';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
     .setVersion('1.0')
@@ -20,11 +20,11 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalInterceptors(  
-    new ClassSerializerInterceptor(
-        app.get(Reflector),
-        { strategy: "excludeAll", excludeExtraneousValues: true }
-    )
+  app.useGlobalInterceptors(
+    new ClassSerializerInterceptor(app.get(Reflector), {
+      strategy: 'excludeAll',
+      excludeExtraneousValues: true,
+    }),
   );
 
   app.useGlobalGuards(...getGuards(app));

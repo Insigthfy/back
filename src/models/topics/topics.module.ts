@@ -7,12 +7,11 @@ import { SurveyModule } from '../survey/survey.module';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      { name: Topic.name, schema: TopicSchema },
-    ]),
+    MongooseModule.forFeature([{ name: Topic.name, schema: TopicSchema }]),
     SurveyModule,
   ],
   controllers: [TopicsController],
-  providers: [TopicsService]
+  providers: [TopicsService],
+  exports: [TopicsService],
 })
 export class TopicsModule {}

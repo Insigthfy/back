@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Expose, Transform } from "class-transformer";
+import { Expose, Transform, Type } from "class-transformer";
+import { CompanyResponse } from "src/models/companies/dto/output.dto";
 
 export class UsersResponse {
     @ApiProperty({
@@ -16,7 +17,7 @@ export class UsersResponse {
     })
     @Expose()
     name: string;
-     
+
     @ApiProperty({
         description: "User email",
         type: String
@@ -28,6 +29,7 @@ export class UsersResponse {
         description: "User company",
         type: String
     })
+    @Type(() => CompanyResponse)
     @Expose()
     company: string;
 }

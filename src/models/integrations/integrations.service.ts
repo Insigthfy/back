@@ -1,3 +1,6 @@
+import * as path from 'path';
+import * as fs from 'fs';
+import { EmailBodyDTO } from './dto/emailBody.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { SurveysService } from '../survey/surveys.service';
 import { InjectModel } from '@nestjs/mongoose';
@@ -18,7 +21,7 @@ export class IntegrationsService {
     const template = await this.templateRepository.findOne();
 
     if (!template) {
-      throw new NotFoundException("Cannot find this template");
+      throw new NotFoundException('Cannot find this template');
     }
 
     const survey = await this.surveysService.getById(id);
@@ -36,9 +39,22 @@ export class IntegrationsService {
     let data = template.content;
 
     data = data
-      .replaceAll("{surveyTitle}", survey.title)
-      .replaceAll("{businessName}", company.name);
+      .replaceAll('{surveyTitle}', survey.title)
+      .replaceAll('{businessName}', company.name);
 
     return data;
+  }
+
+  async renderTemplate(emailData: EmailBodyDTO): Promise<string> {
+    const templatePath = path.join(
+      __dirname,
+      '../../../public/avaliationTemplate.html',
+    );
+    const template = fs.readFileSync(templatePath, 'utf8');
+    const templateReplaced = template
+      .replace('{{title}}', emailData.title)
+      .replace('{{description}}', emailData.description)
+      .replace('{{companyName}}', emailData.companyName);
+    return templateReplaced;
   }
 }

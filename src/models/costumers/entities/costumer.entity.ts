@@ -1,6 +1,6 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { ICostumer } from "../interfaces/costumer.interface";
-import { Types } from "mongoose";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { ICostumer } from '../interfaces/costumer.interface';
+import { Types } from 'mongoose';
 
 @Schema()
 export class Costumer implements ICostumer {

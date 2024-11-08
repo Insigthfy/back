@@ -1,5 +1,7 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { IResponse } from '../interfaces/response.interface';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { IResponse, ISurveyAnswer } from '../interfaces/response.interface';
+import { Types } from 'mongoose';
+import { ICostumer } from 'src/models/costumers/interfaces/costumer.interface';
 
 @Schema()
 export class Response implements IResponse {
@@ -9,8 +11,8 @@ export class Response implements IResponse {
   @Prop({ required: true })
   survey: string;
 
-  @Prop({ required: true })
-  user: string;
+  @Prop({ required: true, type: Types.ObjectId, ref: "Costumer" })
+  user: ICostumer;
 
   @Prop({ required: true })
   email: string;
@@ -19,10 +21,9 @@ export class Response implements IResponse {
   phone: string;
 
   @Prop({
-    type: String || Number,
-    required: true
+    required: true,
   })
-  answer: string | number;
+  survey_answers: ISurveyAnswer[];
 }
 
 export const ResponseSchema = SchemaFactory.createForClass(Response);

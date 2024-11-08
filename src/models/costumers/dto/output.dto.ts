@@ -1,7 +1,7 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Expose, Transform } from "class-transformer";
+import { ApiProperty } from '@nestjs/swagger';
+import { Expose, Transform } from 'class-transformer';
 
-export class ConstumerResponse {
+export class CostumerResponse {
     @ApiProperty({
         description: "Costumer id",
         type: String

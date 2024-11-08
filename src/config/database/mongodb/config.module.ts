@@ -9,10 +9,10 @@ import { MongoConfigService } from './config.service';
     ConfigModule.forRoot({
       load: [configuration],
       validationSchema: Joi.object({
-        DB_HOST: Joi.string().default(""),
+        DB_HOST: Joi.string().default(''),
         DB_USERNAME: Joi.string().required(),
         DB_PASSWORD: Joi.string().required(),
-        DB_DATABASE: Joi.string().default('insigthfy')
+        DB_DATABASE: Joi.string().default('insigthfy'),
       }),
     }),
   ],
