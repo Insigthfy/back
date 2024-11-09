@@ -16,7 +16,10 @@ export class SurveysService {
   ) { }
 
   async find(): Promise<Survey[]> {
-    return await this.surveyRepository.find();
+    return await this.surveyRepository
+      .find()
+      .populate('base', 'id name')
+      .lean();
   }
 
   async getById(id: string): Promise<Survey> {

@@ -86,10 +86,10 @@ export class SurveyResponse {
 
   @ApiProperty({
     description: 'Survey base',
-    type: Object
+    type: BaseResponse
   })
-  @Type(() => BaseResponse)
   @Expose()
+  @Type(() => BaseResponse)
   base: BaseResponse
 
   @ApiProperty({
