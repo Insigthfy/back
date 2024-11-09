@@ -2,7 +2,7 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import getGuards from './common/guards';
+// import getGuards from './common/guards';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -11,9 +11,9 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setVersion('1.0')
     .addBearerAuth({
-      type: "http",
-      scheme: "bearer",
-      bearerFormat: "jwt"
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'jwt',
     })
     .build();
 
@@ -28,7 +28,7 @@ async function bootstrap() {
     }),
   );
 
-  app.useGlobalGuards(...getGuards(app));
+  // app.useGlobalGuards(...getGuards(app));
 
   await app.listen(8080);
 }
