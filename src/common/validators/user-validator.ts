@@ -17,9 +17,9 @@ export class UserConstraint implements ValidatorConstraintInterface {
         private readonly usersRepository: Model<User>
     ) {}
 
-    async validate(username: string): Promise<boolean> {
+    async validate(id: string): Promise<boolean> {
         try {
-            const user = await this.usersRepository.findOne({ username });
+            const user = await this.usersRepository.findOne({ _id: id });
 
             if (!user) {
                 throw new NotFoundException("Usuário não encontrado");
