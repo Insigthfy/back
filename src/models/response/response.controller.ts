@@ -7,11 +7,17 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ResponsesService } from './responses.service';
-import { ApiBearerAuth, ApiBody, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { ResponseParamsDto } from "./dto/params.dto";
-import { CreateResponseDto } from "./dto/create.response.dto";
-import { ResponseResponse } from "./dto/output.dto";
-import { ResponseDTOInterceptor } from "src/common/interceptors/response.interceptor";
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { ResponseParamsDto } from './dto/params.dto';
+import { CreateResponseDto } from './dto/create.response.dto';
+import { ResponseResponse } from './dto/output.dto';
+import { ResponseDTOInterceptor } from 'src/common/interceptors/response.interceptor';
 
 @ApiTags('Responses')
 @ApiBearerAuth()
