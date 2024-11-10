@@ -14,6 +14,7 @@ import { CompanyParamsDto, EmailParamDto, ParamsDto } from './dto/params.dto';
 import { CreateCostumerDto } from './dto/create-costumer.dto';
 import { ResponseDTOInterceptor } from 'src/common/interceptors/response.interceptor';
 import { CostumerResponse } from './dto/output.dto';
+import { IsPublic } from 'src/common/decorators/public.decorator';
 
 @ApiTags('Costumers')
 @ApiBearerAuth()
@@ -29,6 +30,7 @@ export class CostumersController {
 
   @ApiParam({ name: 'id', type: String })
   @Get('/:id')
+  @IsPublic()
   async findOne(@Param() { id }: ParamsDto) {
     return await this.costumerService.findOne(id);
   }
@@ -45,7 +47,7 @@ export class CostumersController {
     return this.costumerService.findByCompany(company);
   }
 
-  @ApiParam({ name: "id", type: String })
+  @ApiParam({ name: 'id', type: String })
   @Get('/base/:id')
   findByBase(@Param() { id }: ParamsDto) {
     return this.costumerService.findByBase(id);

@@ -6,7 +6,9 @@ export class BaseResponse {
     description: 'Base id',
     type: String,
   })
-  @Transform(({ obj }) => obj.id.toString(), { toClassOnly: true })
+  @Transform(({ obj }) => obj?._id?.toString() ?? obj.id.toString(), {
+    toClassOnly: false,
+  })
   @Expose({ name: 'id' })
   id: string;
 

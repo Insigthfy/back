@@ -9,7 +9,7 @@ export interface ISurvey {
   sms: boolean;
   whatsapp: boolean;
   company: string;
-  base: string | null;
+  base: IBase;
   status: SurveyStatusEnum;
   date_scheduled: Date;
   endDate?: Date;

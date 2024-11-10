@@ -16,14 +16,13 @@ export class SurveysService {
   ) {}
 
   async find(): Promise<Survey[]> {
-    return await this.surveyRepository.find().lean();
+    const data = await this.surveyRepository.find().lean();
+
+    return data;
   }
 
   async getById(id: string): Promise<Survey> {
-    const survey = await this.surveyRepository
-      .findById(id)
-      .populate('base', 'id name')
-      .lean();
+    const survey = await this.surveyRepository.findById(id).lean();
 
     if (!survey) {
       throw new NotFoundException(`Survey with id ${id} not found`);
@@ -33,7 +32,9 @@ export class SurveysService {
   }
 
   async findRecents(): Promise<Survey[]> {
-    return this.surveyRepository.find().limit(6);
+    const data = await this.surveyRepository.find().limit(6);
+
+    return data;
   }
 
   async create({ company, title, scheduledDate }: CreateSurveyDto) {

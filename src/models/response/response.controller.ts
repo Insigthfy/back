@@ -18,6 +18,7 @@ import { ResponseParamsDto } from './dto/params.dto';
 import { CreateResponseDto } from './dto/create.response.dto';
 import { ResponseResponse } from './dto/output.dto';
 import { ResponseDTOInterceptor } from 'src/common/interceptors/response.interceptor';
+import { IsPublic } from 'src/common/decorators/public.decorator';
 
 @ApiTags('Responses')
 @ApiBearerAuth()
@@ -44,6 +45,7 @@ export class ResponsesController {
     status: 204,
     type: CreateResponseDto,
   })
+  @IsPublic()
   async create(@Body() response: CreateResponseDto) {
     return await this.responseService.create(response);
   }

@@ -11,15 +11,15 @@ import { User, UserSchema } from 'src/models/users/entities/user.entity';
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     JwtModule.registerAsync({
-        imports: [AuthConfigModule],
-        useFactory: async (authConfigService: AuthConfigService) => ({
-            global: true,
-            secret: authConfigService.jwt_secret
-        }),
-        inject: [AuthConfigService]
-    })
+      imports: [AuthConfigModule],
+      useFactory: async (authConfigService: AuthConfigService) => ({
+        global: true,
+        secret: authConfigService.jwt_secret,
+      }),
+      inject: [AuthConfigService],
+    }),
   ],
   providers: [AuthenticationService],
-  controllers: [AuthenticationController]
+  controllers: [AuthenticationController],
 })
 export class AuthenticationModule {}

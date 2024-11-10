@@ -1,14 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import * as dotenv from 'dotenv';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { ResponsesService } from "../response/responses.service";
+import { ResponsesService } from '../response/responses.service';
 import { FormTypes } from '../survey/enums/types.enum';
 
 dotenv.config();
 
 @Injectable()
 export class GeminiAIService {
-  constructor(private readonly responseService: ResponsesService) { }
+  constructor(private readonly responseService: ResponsesService) {}
 
   async summarizeText(idSurvey: string): Promise<string> {
     try {
@@ -34,7 +34,7 @@ export class GeminiAIService {
       const emotion = await this.emotionText(idSurvey);
 
       const result = await model.generateContent(
-        `Summarize the following texts in pt-br and return a JSON: {"summary": "Uma única string resumindo todos os textos.", "topics": [{"topicTitle": "Título do tópico", "topicDescription": "Descrição geral do tema, sem mencionar nomes ou detalhes específicos.", "texts": ["Lista de textos relacionados a esse tópico"]}], "positiveTopicsCount": Número de tópicos positivos (${emotion}), "negativeTopicsCount": Número de tópicos negativos (${emotion})}; evite mencionar nomes específicos ou títulos presentes nos textos originais; forneça apenas o JSON, sem introduções ou sugestões; textos: ${analyze}.`
+        `Summarize the following texts in pt-br and return a JSON: {"summary": "Uma única string resumindo todos os textos.", "topics": [{"topicTitle": "Título do tópico", "topicDescription": "Descrição geral do tema, sem mencionar nomes ou detalhes específicos.", "texts": ["Lista de textos relacionados a esse tópico"]}], "positiveTopicsCount": Número de tópicos positivos (${emotion}), "negativeTopicsCount": Número de tópicos negativos (${emotion})}; evite mencionar nomes específicos ou títulos presentes nos textos originais; forneça apenas o JSON, sem introduções ou sugestões; textos: ${analyze}.`,
       );
       const response = result.response;
       const textR = JSON.parse(
@@ -69,7 +69,7 @@ export class GeminiAIService {
 
       const result = await model.generateContent(
         "Can you cluster it on different categories/occurrences, and then classify then based on what kinda of emotion they pass (be direct, and give your summarized reason of choice) response on pt-br. Just analysis the relevant ones (the ones there are not too much negative or positive), if one of them are not relevant and significant discard it analysis. Don't forget to cluster it at max. For the answer i need the number of comments each category, the emotions of the category and the number of discarded comments and ONE (1) example of it? Do not suggest any action to remove or add new comments. text: " +
-        analyze,
+          analyze,
       );
       const response = result.response;
       const textR = response.text();
@@ -118,9 +118,12 @@ export class GeminiAIService {
       
       Comments to classify:
       ${JSON.stringify(textAnswer)}
-    `
+    `,
     );
-    const response = result.response.text().replace('```json', '').replace('```', '');
+    const response = result.response
+      .text()
+      .replace('```json', '')
+      .replace('```', '');
 
     return response;
   }

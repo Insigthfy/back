@@ -15,7 +15,7 @@ export class IntegrationsService {
     private readonly templateRepository: Model<Template>,
     private readonly surveysService: SurveysService,
     private readonly companiesService: CompaniesService,
-  ) { }
+  ) {}
 
   async find(id: string): Promise<string> {
     const template = await this.templateRepository.findOne();
