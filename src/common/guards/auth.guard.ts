@@ -29,17 +29,18 @@ export class AuthGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest();
     const token = extractToken(request.headers);
-
+    
     if (!token) {
       throw new UnauthorizedException('Bearer token was not provided.');
     }
 
     try {
-      const { id } = await this.jwtService.verifyAsync(token, {
+      const { id, company } = await this.jwtService.verifyAsync(token, {
         secret: this.authConfigService.jwt_secret,
       });
 
       request['id'] = id;
+      request['company'] = company;
     } catch {
       throw new UnauthorizedException('Failed to verify bearer token.');
     }

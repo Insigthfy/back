@@ -25,8 +25,8 @@ export class Survey extends Document implements ISurvey {
   @Prop({ required: true })
   company: string;
 
-  @Prop({ required: true, type: Types.ObjectId, ref: 'Base' })
-  base: IBase;
+  @Prop({ required: false, type: Types.ObjectId, ref: 'Base' })
+  base: IBase | null;
 
   @Prop({ required: true })
   status: SurveyStatusEnum;

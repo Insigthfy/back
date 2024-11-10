@@ -22,7 +22,9 @@ export class SurveysService {
   }
 
   async getById(id: string): Promise<Survey> {
-    const survey = await this.surveyRepository.findById(id).lean();
+    const survey = await this.surveyRepository.findById(id)
+      .populate("base", "id name")
+      .lean();
 
     if (!survey) {
       throw new NotFoundException(`Survey with id ${id} not found`);
@@ -37,13 +39,8 @@ export class SurveysService {
     return data;
   }
 
-  async create({ company, title, scheduledDate }: CreateSurveyDto) {
-    const c = await this.companiesService.findOne(company);
-
-    if (!c) {
-      throw new NotFoundException(`Cannot find company with id ${company}`);
-    }
-
+  async create(company, { title, scheduledDate }: CreateSurveyDto) {
+    console.log(company);
     return await this.surveyRepository.create({
       title,
       company,
@@ -52,14 +49,17 @@ export class SurveysService {
       email: false,
       sms: false,
       whatsapp: false,
-      base: null,
       status: SurveyStatusEnum.SCHEDULED,
       date_scheduled: scheduledDate,
     });
   }
 
   async createQuestion(id: string, { surveyType }: CreateQuestionDto) {
-    const survey = await this.getById(id);
+    const survey = await this.surveyRepository.findById(id);
+
+    if(!survey) {
+      throw new NotFoundException(`Cannot find company with id ${id}`);
+    }
 
     survey.form.push({
       surveyType,

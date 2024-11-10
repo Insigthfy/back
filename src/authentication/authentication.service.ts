@@ -35,6 +35,7 @@ export class AuthenticationService {
     return {
       access_token: await this.jwtService.signAsync({
         id: user._id,
+        company: user.company
       }),
     };
   }
@@ -61,6 +62,7 @@ export class AuthenticationService {
       return {
         access_token: await this.jwtService.signAsync({
           id: newUser._id,
+          company: newUser.company
         }),
       };
     }

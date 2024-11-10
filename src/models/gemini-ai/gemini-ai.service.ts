@@ -17,7 +17,7 @@ export class GeminiAIService {
       const responses = await this.responseService.getSurveyById(idSurvey);
 
       if (!responses.length)
-        throw new NotFoundException('Pesquisa não encontrada!');
+        throw new NotFoundException('Nenhuma resposta encontrada!');
 
       const textAnswer: string[][] = responses.map((e) =>
         e.survey_answers

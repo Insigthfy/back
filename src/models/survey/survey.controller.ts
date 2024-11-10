@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Req,
   UseInterceptors,
 } from '@nestjs/common';
 import { SurveysService } from './surveys.service';
@@ -73,8 +74,8 @@ export class SurveysController {
     status: 201,
     type: SurveyResponse,
   })
-  async create(@Body() survey: CreateSurveyDto): Promise<Survey> {
-    return await this.surveysService.create(survey);
+  async create(@Req() req, @Body() survey: CreateSurveyDto): Promise<Survey> {
+    return await this.surveysService.create(req.company, survey);
   }
 
   @Post('question/:id')

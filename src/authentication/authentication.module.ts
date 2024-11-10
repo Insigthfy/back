@@ -14,7 +14,7 @@ import { User, UserSchema } from 'src/models/users/entities/user.entity';
       imports: [AuthConfigModule],
       useFactory: async (authConfigService: AuthConfigService) => ({
         global: true,
-        secret: authConfigService.jwt_secret,
+        secret: authConfigService.jwt_secret || "jwt",
       }),
       inject: [AuthConfigService],
     }),

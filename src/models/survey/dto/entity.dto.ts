@@ -12,13 +12,6 @@ export class CreateSurveyDto {
   title: string;
 
   @ApiProperty({
-    description: 'Company that the survey is for',
-    type: String,
-  })
-  @IsMongoId()
-  company: string;
-
-  @ApiProperty({
     description: 'Date for the survey',
     type: Date,
   })
