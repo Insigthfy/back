@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Survey } from './entities/survey.entity';
 import { CreateQuestionDto, CreateSurveyDto } from './dto/entity.dto';
-import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
-import { SurveyStatusEnum } from "./enums/survey-status.enum";
-import { CompaniesService } from "../companies/companies.service";
-import { FormTypes } from "./enums/types.enum";
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { SurveyStatusEnum } from './enums/survey-status.enum';
+import { CompaniesService } from '../companies/companies.service';
+import { FormTypes } from './enums/types.enum';
 
 @Injectable()
 export class SurveysService {
@@ -13,13 +13,10 @@ export class SurveysService {
     @InjectModel(Survey.name)
     private readonly surveyRepository: Model<Survey & Document>,
     private readonly companiesService: CompaniesService,
-  ) { }
+  ) {}
 
   async find(): Promise<Survey[]> {
-    return await this.surveyRepository
-      .find()
-      .populate('base', 'id name')
-      .lean();
+    return await this.surveyRepository.find().lean();
   }
 
   async getById(id: string): Promise<Survey> {
@@ -65,8 +62,8 @@ export class SurveysService {
 
     survey.form.push({
       surveyType,
-      description: "This is a default description",
-      responses: this.createResponse(surveyType)
+      description: 'This is a default description',
+      responses: this.createResponse(surveyType),
     });
 
     await survey.save();
@@ -75,17 +72,21 @@ export class SurveysService {
   }
 
   async patch(id: string, obj: Partial<Survey>) {
-    const updatedSurvey = await this.surveyRepository.findByIdAndUpdate(id, obj, {
-      new: true,
-      runValidators: true,
-    });
-  
+    const updatedSurvey = await this.surveyRepository.findByIdAndUpdate(
+      id,
+      obj,
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
+
     if (!updatedSurvey) {
       throw new Error('Survey not found');
     }
 
     return updatedSurvey;
-  }  
+  }
 
   async delete(id: string): Promise<void> {
     const result = await this.surveyRepository.deleteOne({ _id: id });
@@ -99,9 +100,9 @@ export class SurveysService {
       case FormTypes.GRADE:
         return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
       case FormTypes.TEXT_BOXES:
-        return ["Muito ruim", "Ruim", "Regular", "Bom", "Muito Bom"];
+        return ['Muito ruim', 'Ruim', 'Regular', 'Bom', 'Muito Bom'];
       default:
-        return ""
+        return '';
     }
   }
 }
