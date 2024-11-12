@@ -21,11 +21,10 @@ export class GeminiAIService {
 
       const textAnswer: string[][] = responses.map((e) =>
         e.survey_answers
-          .filter((e) => e.type === FormTypes.TEXT.toString())
           .map((e) => e.answer),
       );
 
-      const analyze: string = textAnswer.join(' ');
+      const analyze: string = textAnswer.join(', ');
 
       if (analyze.trim().length === 0) {
         throw new NotFoundException('Nenhum comentário encontrado');
@@ -57,7 +56,6 @@ export class GeminiAIService {
 
       const textAnswer: string[][] = responses.map((e) =>
         e.survey_answers
-          .filter((e) => e.type === FormTypes.TEXT.toString())
           .map((e) => e.answer),
       );
 
