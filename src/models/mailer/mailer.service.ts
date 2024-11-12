@@ -34,7 +34,7 @@ export class EmailService {
     const newHTML = dataHTML.content.replaceAll('{{nomeEmpresa}}', company);
     const finalHTML = newHTML.replaceAll(
       '{{linkPesquisa}}',
-      `http://localhost:3000/pesquisa/${survey}/${userId.id}`,
+      `https://insightfy.vercel.app/pesquisa/${survey}/${userId.id}`,
     );
 
     const msg = {
