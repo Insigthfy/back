@@ -13,7 +13,7 @@ import { ResponseDTOInterceptor } from 'src/common/interceptors/response.interce
 import { IsPublic } from 'src/common/decorators/public.decorator';
 
 @ApiTags('Authentication')
-@Controller('authentication')
+@Controller('v1/authentication')
 @UseInterceptors(new ResponseDTOInterceptor(AuthResponse))
 export class AuthenticationController {
   constructor(private readonly authService: AuthenticationService) {}

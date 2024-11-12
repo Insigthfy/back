@@ -4,6 +4,7 @@ import {
   Get,
   NotFoundException,
   Post,
+  Req,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -22,8 +23,8 @@ export class BasesController {
   constructor(private readonly basesService: BasesService) {}
 
   @Get()
-  find() {
-    return this.basesService.find();
+  find(@Req() req) {
+    return this.basesService.findByCompany(req.company);
   }
 
   @Post()
@@ -35,6 +36,7 @@ export class BasesController {
     required: true,
   })
   async uploadCsv(
+    @Req() req,
     @UploadedFile() file: Express.Multer.File,
     @Body() base: CreateBaseDto,
   ) {
@@ -42,7 +44,7 @@ export class BasesController {
       throw new NotFoundException('File is required');
     }
 
-    const csvData = await this.basesService.create(file.buffer, base);
+    const csvData = await this.basesService.create(file.buffer, req.company, base);
 
     return csvData;
   }

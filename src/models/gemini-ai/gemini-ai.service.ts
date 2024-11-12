@@ -84,7 +84,7 @@ export class GeminiAIService {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-    const responses = await this.responseService.getSurveyById(idSurvey);
+    const responses = await this.responseService.findByTopic(idSurvey);
 
     if (!responses) throw new NotFoundException('Pesquisa não encontrada!');
 

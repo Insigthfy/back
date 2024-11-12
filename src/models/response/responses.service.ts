@@ -31,6 +31,13 @@ export class ResponsesService {
       .lean();
   }
 
+  async findByTopic(id: string) {
+    return this.responseRepository
+      .find({ topic: id })
+      .populate('user', 'id name email')
+      .lean();
+  }
+
   async create(response: CreateResponseDto) {
     await this.surveysService.getById(response.survey);
 
@@ -58,14 +65,17 @@ export class ResponsesService {
 
     if (!topics) throw new NotFoundException('Sem tópicos encontrados');
 
-    const topicsNames = topics.map((e) => e.name).join('  ');
+    const topicsNames = topics.map((e) => e.name).join(', ');
 
     const selectedTopic = await model.generateContent(
-      'Based on the topics i will give you, classify the answer on ONE of them. return only the name of the topic chosen. Give me only the name of the topic, no more information. If none of then are good choose the first of the topics passed. Topics: ' +
+      'Based on the topics i will give you, classify the answer on ONE of them. return only the name of the topic chosen. Give me only the name of the topic, no more information (no "," or "."). If none of then are good choose the first of the topics passed. Topics: ' +
         topicsNames +
         '. answer: ' +
         answers,
     );
+
+    console.log(topicsNames);
+    console.log(selectedTopic.response.text());
     const res = selectedTopic.response.text().trim();
 
     const data = topics.filter((e) => e.name == res);

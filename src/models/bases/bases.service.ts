@@ -21,12 +21,17 @@ export class BasesService {
     return data;
   }
 
-  async create(buffer: Buffer, { name }: CreateBaseDto) {
+  async findByCompany(company: string) {
+    return this.baseRepository.find({ company });
+  }
+
+  async create(buffer: Buffer, company, { name }: CreateBaseDto) {
     const newBase = await this.baseRepository.create({
       name,
+      company
     });
 
-    this.addUsers(buffer, newBase.id);
+    this.addUsers(buffer, newBase._id.toString());
 
     return newBase;
   }

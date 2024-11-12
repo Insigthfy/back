@@ -1,4 +1,5 @@
 export interface IBase {
-  name: string;
   id: string;
+  name: string;
+  company: string;
 }

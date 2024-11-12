@@ -4,9 +4,11 @@ import { IBase } from '../interfaces/base.interface';
 @Schema()
 export class Base implements IBase {
   @Prop()
+  id: string;
+  @Prop()
   name: string;
   @Prop()
-  id: string;
+  company: string;
 }
 
 export const BaseSchema = SchemaFactory.createForClass(Base);
